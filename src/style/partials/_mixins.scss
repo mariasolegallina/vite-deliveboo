@@ -1,0 +1,93 @@
+// text
+@mixin header-reg {
+    font-size: 22px;
+    font-weight: 400;
+    color: $grey0;
+}
+
+@mixin header-semi {
+    font-size: 22px;
+    font-weight: 600;
+    color: $grey0;
+}
+
+
+
+
+// @mixin txt-1 {
+//     font-size: 12px;
+//     font-weight: 400;
+//     line-height: 22px;
+
+// }
+
+// @mixin txt-2 {
+//     font-size: 18px;
+//     font-weight: 400;
+
+// }
+
+// @mixin title-1 {
+//     font-family: 'Lora', serif;
+//     font-size: 52px;
+//     font-weight: 400;
+// }
+
+// @mixin title-2 {
+//     font-family: 'Lora', serif;
+//     font-size: 36px;
+//     font-weight: 400;
+//     line-height: 74px;
+
+// }
+
+// @mixin title-1-uppercase {
+//     font-size: 16px;
+//     font-weight: 600;
+//     text-transform: uppercase;
+// }
+
+// // background
+
+// @mixin bg-green-pattern {
+//     background-color: $dark-green;
+//     background-image: url('src/img/bg-transparent-3.png');
+//     background-repeat: repeat;
+// }
+
+// @mixin bg-mgreen-pattern {
+//     background-color: $mid-green;
+//     background-image: url('src/img/bg-transparent-3.png');
+//     background-repeat: repeat;
+// }
+
+// // buttons
+
+// @mixin bright-btn {
+//     color: $dark;
+//     background-color: $bright;
+//     @include txt-1;
+//     border-radius: 50px;
+//     border: none;
+//     padding: 8px 30px;
+// }
+
+// @mixin lgreen-btn {
+//     color: $bright;
+//     background-color: $light-green;
+//     @include txt-1;
+//     border-radius: 50px;
+//     border: none;
+//     padding: 8px 30px;
+
+// }
+
+// // input
+
+// @mixin input {
+//     flex-grow: 1;
+//     @include txt-1;
+//     border-radius: 50px;
+//     border: none;
+//     padding: 8px 30px;
+// }
