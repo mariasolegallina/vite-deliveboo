@@ -1,9 +1,20 @@
 <script>
+
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      restaurants: []
+      restaurants: [],
+
+      baseApiUrl: 'http://127.0.0.1:8000/api',
     }
+  },
+
+  mounted() {
+    axios.get(this.baseApiUrl + '/restaurants').then(res => [
+      this.restaurants = res.data.results.data
+    ])
   },
 }
 </script>
@@ -12,6 +23,18 @@ export default {
 <div class="container">
   <h1>Ciao mondo</h1>
   <button type="button" class="btn btn-primary">Primary</button>
+
+
+  <div>
+    <ul>
+      <li v-for="restaurant in restaurants">
+
+        {{ restaurant.restaurant_name }}
+
+
+      </li>
+    </ul>
+  </div>
 </div>
 </template>
 
