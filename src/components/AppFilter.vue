@@ -9,21 +9,21 @@ export default {
     data(){
         return{
             store,
-            activeType: null,
+            activeTypes: [],
         }
     },
 
     methods: {
-        filterByTypes(type) {
-            if (this.activeType === type) {
-                this.activeType = null;
-                this.$emit('filter', null);
-            } else {
-                this.activeType = type;
-                this.$emit('filter', type);
-            }
-        }
-    },
+       filterByTypes(type) {
+           const index = this.activeTypes.indexOf(type);
+           if (index > -1) {
+               this.activeTypes.splice(index, 1); // Rimuove il type se già presente
+           } else {
+               this.activeTypes.push(type); // Aggiunge il type se non presente
+           }
+           this.$emit('filter', this.activeTypes);
+       }
+   },
 }
 
 </script>
@@ -35,8 +35,8 @@ export default {
         <ul class="d-flex justify-content-center gap-4">
             <li v-for="currentType in store.types" :key="currentType.name">
                 <a href="#" 
-                :class="['badge rounded-pill fs-5', currentType.name === activeType ? 'active' : 'text-bg-secondary']"
-                @click="filterByTypes(currentType.name)"
+                    :class="['badge rounded-pill fs-5', activeTypes.includes(currentType.name) ? 'text-bg-secondary' : 'text-bg-light']"
+                    @click="filterByTypes(currentType.name)"
                 >{{ currentType.name }}</a>
             </li>
         </ul>
