@@ -35,12 +35,12 @@ export default {
 </script>
 
 <template>
-<div class="container">
-  <h1>Ciao mondo</h1>
-  <button type="button" class="btn btn-primary">Primary</button>
+<div class="container py-5">
+  
+  <h1>Ristoranti:</h1>
 
 
-  <div>
+  <div class="row row-gap-2 py-5">
     <RestaurantItem 
       v-for="restaurant in restaurants"
       :restaurant="restaurant"
