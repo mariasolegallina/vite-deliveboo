@@ -1,9 +1,14 @@
 <script>
 
+import RestaurantItem from '../components/RestaurantItem.vue';
 import axios from 'axios';
 
 export default {
     name: 'HomePage',
+
+    components: {
+      RestaurantItem,
+    },
 
     data() {
         return {
@@ -36,14 +41,12 @@ export default {
 
 
   <div>
-    <ul>
-      <li v-for="restaurant in restaurants">
+    <RestaurantItem 
+      v-for="restaurant in restaurants"
+      :restaurant="restaurant"
+      >
 
-        {{ restaurant.restaurant_name }}
-
-
-      </li>
-    </ul>
+    </RestaurantItem>
   </div>
 </div>
 </template>

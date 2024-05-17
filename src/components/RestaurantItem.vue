@@ -14,7 +14,7 @@ export default {
 
 <div class="card">
     <h2>
-        {{ restaurant.name }}
+        {{ restaurant.restaurant_name }}
     </h2>
 </div>
 
