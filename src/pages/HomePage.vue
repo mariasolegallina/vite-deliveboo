@@ -1,6 +1,7 @@
 <script>
 
 import RestaurantItem from '../components/RestaurantItem.vue';
+import AppFilter from '../components/AppFilter.vue';
 import axios from 'axios';
 
 export default {
@@ -8,6 +9,7 @@ export default {
 
     components: {
       RestaurantItem,
+      AppFilter,
     },
 
     data() {
@@ -24,12 +26,12 @@ export default {
         this.restaurants = res.data.results.data,
         console.log(res.data)
         ]),
-
+        
         axios.get(this.baseApiUrl + '/types').then(res=>[
         this.types = res.data.results,
         console.log(res.data.results)
         ])
-    },
+    }
 }
 
 </script>
@@ -39,6 +41,7 @@ export default {
   <h1>Ciao mondo</h1>
   <button type="button" class="btn btn-primary">Primary</button>
 
+  <AppFilter></AppFilter>
 
   <div>
     <RestaurantItem 
