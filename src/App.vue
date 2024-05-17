@@ -6,6 +6,7 @@ export default {
   data() {
     return {
       restaurants: [],
+      types: [],
 
       baseApiUrl: 'http://127.0.0.1:8000/api',
     }
@@ -13,7 +14,13 @@ export default {
 
   mounted() {
     axios.get(this.baseApiUrl + '/restaurants').then(res => [
-      this.restaurants = res.data.results.data
+      this.restaurants = res.data.results.data,
+      console.log(res.data)
+    ]),
+
+    axios.get(this.baseApiUrl + '/types').then(res=>[
+      this.types = res.data.results,
+      console.log(res.data.results)
     ])
   },
 }
