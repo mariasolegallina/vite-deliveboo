@@ -8,15 +8,17 @@ name: 'PageHeader',
 
 <template>
 <header>
-    <nav class="container">
-        <div class="logo">
-            <img src="/img/deliveboo-logo.png" alt="">
-        </div>
-        <div class="icons">
-            <i class="fa-solid fa-user"></i>
-            <i class="fa-solid fa-basket-shopping"></i>
-        </div>
-    </nav>
+    <section>
+        <nav class="container">
+            <figure class="logo">
+                <img src="/img/deliveboo-logo.png" alt="">
+            </figure>
+            <div class="icons">
+                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+        </nav>
+    </section>
 </header>
 </template>
 
@@ -28,16 +30,24 @@ header {
 };
 
 nav {
-    width: 130px;
-    padding: 10px 0;
+    padding: 14px 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    .logo {
+
+        max-width: 10rem;
+        
+    }
 
     .icons {
         color: $grey8;
+        font-size: 1.4rem;   
 
         display: flex;
         align-items: center;
+        gap: 1rem;
     }
 
 }
