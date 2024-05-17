@@ -9,12 +9,19 @@ export default {
     data(){
         return{
             store,
+            activeType: null,
         }
     },
 
     methods: {
         filterByTypes(type) {
-            this.$emit('filter', type);
+            if (this.activeType === type) {
+                this.activeType = null;
+                this.$emit('filter', null);
+            } else {
+                this.activeType = type;
+                this.$emit('filter', type);
+            }
         }
     },
 }
@@ -28,7 +35,7 @@ export default {
         <ul class="d-flex justify-content-center gap-4">
             <li v-for="currentType in store.types" :key="currentType.name">
                 <a href="#" 
-                class="badge rounded-pill text-bg-light fs-5"
+                :class="['badge rounded-pill fs-5', currentType.name === activeType ? 'text-bg-secondary' : 'text-bg-light']"
                 @click="filterByTypes(currentType.name)"
                 >{{ currentType.name }}</a>
             </li>

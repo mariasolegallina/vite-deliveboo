@@ -24,9 +24,13 @@ export default {
 
     methods: {
       handleFilter(type) {
-        this.filteredRestaurants = this.store.restaurants.filter(restaurant => 
-          restaurant.types.some(t => t.name === type)
-        );
+        if (type === null) {
+            this.filteredRestaurants = this.store.restaurants;  
+        } else {
+            this.filteredRestaurants = this.store.restaurants.filter(restaurant => 
+                restaurant.types.some(t => t.name === type)
+            );
+        }
       }
     },
 
