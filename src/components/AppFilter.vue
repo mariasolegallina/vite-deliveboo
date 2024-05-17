@@ -30,9 +30,12 @@ export default{
     
     <div>
 
-        <ul>
+        <ul class="d-flex justify-content-center gap-4">
             <li v-for="currentType in types">
-                <a href="#">{{ currentType.name }}</a>
+                <a href="#" 
+                class="badge rounded-pill text-bg-light fs-5"
+                @click="filterByTypes(currentType.name)"
+                >{{ currentType.name }}</a>
             </li>
         </ul>
 
