@@ -27,25 +27,13 @@ img {
 	max-width: 100%;
 }
 
-figure > img {
-	display: block;
-	width: 100%;
-}
-
-
-// Containers & sections
-
-.section {
-    margin: 0 10px;
-}
-
-// .container {
-//     max-width: 1300px;
-//     margin: 0 auto;
-//     padding: 0 10px;
+// figure > img {
+// 	display: block;
+// 	width: 100%;
 // }
 
-// .container-fluid {
-//     max-width: 100%;
-//     margin: 0 auto;
-// }
+
+// Sections
+section {
+    padding: 10px;
+}

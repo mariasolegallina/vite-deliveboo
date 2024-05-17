@@ -10,9 +10,9 @@ name: 'PageHeader',
 <header>
     <section>
         <nav class="container">
-            <figure class="logo">
+            <div class="logo">
                 <img src="/img/deliveboo-logo.png" alt="">
-            </figure>
+            </div>
             <div class="icons">
                 <i class="fa-solid fa-user"></i>
                 <i class="fa-solid fa-basket-shopping"></i>
@@ -23,14 +23,15 @@ name: 'PageHeader',
 </template>
 
 <style lang="scss" scoped>
+// @use "../style/general.scss";
 @use "../style/partials/variables" as *;
 
 header {
     background-color: $light;
+
 };
 
 nav {
-    padding: 14px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
