@@ -1,27 +1,16 @@
 <script>
 
-import axios from 'axios';
+import { store } from '../store.js';
 
-export default{
+export default {
 
     name: 'AppFilter',
 
     data(){
         return{
-            types:[],
-
-            baseApiUrl: 'http://127.0.0.1:8000/api',
-
+            store,
         }
     },
-
-    mounted() {
-        axios.get(this.baseApiUrl + '/types').then(res=>[
-        this.types = res.data.results,
-        console.log(res)
-        ])
-    },
-
 }
 
 </script>
@@ -31,7 +20,7 @@ export default{
     <div>
 
         <ul>
-            <li v-for="currentType in types">
+            <li v-for="currentType in store.types">
                 <a href="#">{{ currentType.name }}</a>
             </li>
         </ul>

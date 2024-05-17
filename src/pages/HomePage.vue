@@ -1,8 +1,10 @@
 <script>
+import axios from 'axios';
+
+import { store } from '../store.js';
 
 import RestaurantItem from '../components/RestaurantItem.vue';
 import AppFilter from '../components/AppFilter.vue';
-import axios from 'axios';
 
 export default {
     name: 'HomePage',
@@ -14,22 +16,17 @@ export default {
 
     data() {
         return {
-            restaurants: [],
-            types: [],
-
-            baseApiUrl: 'http://127.0.0.1:8000/api',
+          store,
         }
     },
 
     mounted() {
-        axios.get(this.baseApiUrl + '/restaurants').then(res => [
-        this.restaurants = res.data.results.data,
-        console.log(res.data)
+        axios.get(this.store.baseApiUrl + '/restaurants').then(res => [
+          this.store.restaurants = res.data.results.data,
         ]),
         
-        axios.get(this.baseApiUrl + '/types').then(res=>[
-        this.types = res.data.results,
-        console.log(res.data.results)
+        axios.get(this.store.baseApiUrl + '/types').then(res=>[
+          this.store.types = res.data.results,
         ])
     }
 }
@@ -45,7 +42,7 @@ export default {
 
   <div>
     <RestaurantItem 
-      v-for="restaurant in restaurants"
+      v-for="restaurant in store.restaurants"
       :restaurant="restaurant"
       >
 
