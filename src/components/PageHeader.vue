@@ -28,6 +28,7 @@ name: 'PageHeader',
 
 header {
     background-color: $light;
+    filter: drop-shadow(0 0 0.2rem $grey2);
 
 };
 
@@ -35,6 +36,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
 
     .logo {
 

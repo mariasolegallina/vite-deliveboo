@@ -45,24 +45,57 @@ export default {
 </script>
 
 <template>
-<div class="py-5">
-  
-  <h1>Ristoranti:</h1>
+<main>
+    <section>
+        <div class="container">
 
-  <AppFilter @filter="handleFilter"></AppFilter>
+            <!-- sidebar -->
+            <div class="side-bar col">
 
-  <div class="row row-gap-2 py-5">
-    <RestaurantItem 
-      v-for="restaurant in filteredRestaurants"
-      :key="restaurant.id"
-      :restaurant="restaurant"
-      >
-    </RestaurantItem>
-  </div>
-</div>
+            </div>
+
+            <!-- main-content -->
+            <div class="main-content col">
+              <h1>Ristoranti:</h1>
+
+              <AppFilter @filter="handleFilter"></AppFilter>
+
+              <div class="row row-gap-2 py-5">
+                <RestaurantItem 
+                  v-for="restaurant in filteredRestaurants"
+                  :key="restaurant.id"
+                  :restaurant="restaurant">
+                </RestaurantItem>
+              </div>
+            </div>
+        </div>
+    </section>
+</main>
 </template>
 
 <style lang="scss" scoped>
-@use "../style/general.scss";
+// @use "../style/general.scss";
+@use "../style/partials/variables" as *;
+@use "../style/partials/mixins" as *;
+
+main {
+    background-color: $grey1;
+};
+
+.container {
+  display: flex;
+  gap: 24px;
+
+  .side-bar {
+    background-color: $grey2;
+    padding: 14px;
+    border-radius: 10px;
+    flex-basis: 24%;
+  }
+
+  h1 {
+    @include header-semi-prim;
+  }
+}
 
 </style>

@@ -1,16 +1,38 @@
-// text
+@use './variables' as *;
+// TEXT
+
+// header
 @mixin header-reg {
-    font-size: 22px;
+    font-size: $txt1;
     font-weight: 400;
-    color: $grey0;
+}
+
+@mixin header-reg-prim {
+    @include header-reg;
+    color: $primary1;
 }
 
 @mixin header-semi {
-    font-size: 22px;
+    font-size: $txt1;
     font-weight: 600;
-    color: $grey0;
 }
 
+@mixin header-semi-prim {
+    @include header-semi;
+    color: $primary1;
+}
+
+
+// title
+@mixin title-semi {
+    font-size: $txt2;
+    font-weight: 600;
+}
+
+@mixin title-semi-prim {
+    @include title-semi;
+    color: $primary1;
+}
 
 
 
