@@ -35,7 +35,7 @@ export default {
         <ul class="d-flex justify-content-center gap-4">
             <li v-for="currentType in store.types" :key="currentType.name">
                 <a href="#" 
-                    :class="['badge rounded-pill fs-5', activeTypes.includes(currentType.name) ? 'text-bg-secondary' : 'text-bg-light']"
+                    :class="['badge rounded-pill fs-5', activeTypes.includes(currentType.name) ? 'active' : 'text-bg-secondary']"
                     @click="filterByTypes(currentType.name)"
                 >{{ currentType.name }}</a>
             </li>
