@@ -51,10 +51,10 @@ export default {
 <template>
 <div class="py-5">
   
-  <h1>Ristoranti:</h1>
-
+  <h2 class="mb-4">Seleziona una o più tipologie</h2>
   <AppFilter @filter="handleFilter"></AppFilter>
-
+  
+  <h2>Ristoranti:</h2>
   <div class="row row-gap-2 py-5">
     <RestaurantItem 
       v-for="restaurant in filteredRestaurants"
