@@ -35,7 +35,7 @@ export default {
         <ul class="d-flex justify-content-center gap-4">
             <li v-for="currentType in store.types" :key="currentType.name">
                 <a href="#" 
-                :class="['badge rounded-pill fs-5', currentType.name === activeType ? 'text-bg-secondary' : 'text-bg-light']"
+                :class="['badge rounded-pill fs-5', currentType.name === activeType ? 'active' : 'text-bg-secondary']"
                 @click="filterByTypes(currentType.name)"
                 >{{ currentType.name }}</a>
             </li>
@@ -45,6 +45,11 @@ export default {
 
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@use "../style/partials/variables" as *;
+
+.active{
+    background-color: $accent2;
+}
 
 </style>
