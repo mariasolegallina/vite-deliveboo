@@ -8,7 +8,7 @@ import Main from '../components/Main.vue';
 import PageFooter from '../components/PageFooter.vue'
 
 import RestaurantItem from '../components/RestaurantItem.vue';
-import AppFilter from '../components/AppFilter.vue';
+// import AppFilter from '../components/AppFilter.vue';
 
 export default {
     name: 'HomePage',
@@ -18,7 +18,7 @@ export default {
       Main,
       PageFooter,
       RestaurantItem,
-      AppFilter,
+      // AppFilter,
     },
 
     data() {
@@ -61,7 +61,7 @@ export default {
   
   <h1>Ristoranti:</h1>
 
-  <AppFilter @filter="handleFilter"></AppFilter>
+  <!-- <AppFilter @filter="handleFilter"></AppFilter> -->
 
   <div class="row row-gap-2 py-5">
     <RestaurantItem 

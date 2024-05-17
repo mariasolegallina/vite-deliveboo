@@ -1,14 +1,26 @@
 <script>
+
 export default {
 
 name: 'Main',
+
+components: {
+      
+    },
 
 }
 </script>
 
 <template>
 <main>
+    <section>
+        <div class="container">
+            <div class="sidebar">
 
+            </div>
+            <div class="main-content"></div>
+        </div>
+    </section>
 </main>
 </template>
 
