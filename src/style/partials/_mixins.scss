@@ -34,6 +34,23 @@
     color: $primary1;
 }
 
+@mixin title2-semi {
+    font-size: $txt3;
+    font-weight: 600;
+}
+
+// text
+
+
+
+// button
+@mixin t-btn {
+    color: $light;
+    font-size: $txt5;
+    border-radius: 50px;
+    border: none;
+    padding: 4px 10px;
+}
 
 
 // @mixin txt-1 {

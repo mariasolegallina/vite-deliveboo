@@ -54,15 +54,16 @@ export default {
         <div class="container">
 
             <!-- sidebar -->
-            <div class="side-bar col">
+            <div class="side-bar">
+              <h2>Filtra</h2>
 
+              <!-- filters -->
+              <AppFilter @filter="handleFilter"></AppFilter>
             </div>
 
             <!-- main-content -->
-            <div class="main-content col">
+            <div class="main-content">
               <h1>Ristoranti:</h1>
-
-              <AppFilter @filter="handleFilter"></AppFilter>
 
               <div class="row row-gap-2 py-5">
                 <RestaurantItem 
@@ -92,9 +93,18 @@ main {
 
   .side-bar {
     background-color: $grey2;
-    padding: 14px;
-    border-radius: 10px;
-    flex-basis: 24%;
+    padding: 24px;
+    // border-radius: 6px;
+
+    h2 {
+      @include title2-semi;
+      color: $grey8;
+      margin-bottom: 14px;
+    }
+  }
+
+  .main-content {
+    flex-grow: 1;
   }
 
   h1 {

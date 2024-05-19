@@ -29,30 +29,44 @@ export default {
 </script>
 
 <template>
-    
-    <div>
-
-        <ul class="d-flex justify-content-center gap-4">
-            <li v-for="currentType in store.types" :key="currentType.name">
-                <a href="#" 
-                    :class="['badge rounded-pill fs-5', activeTypes.includes(currentType.name) ? 'active' : 'deactive']"
-                    @click="filterByTypes(currentType.name)"
-                >{{ currentType.name }}</a>
-            </li>
-        </ul>
-
-    </div>
+    <ul class="d-types">
+        <li v-for="currentType in store.types" :key="currentType.name">
+            <a href="#" 
+                :class="['', activeTypes.includes(currentType.name) ? 'active' : 'deactive']"
+                @click="filterByTypes(currentType.name)"
+            >{{ currentType.name }}</a>
+        </li>
+    </ul>
 
 </template>
 
 <style lang="scss" scoped>
 @use "../style/partials/variables" as *;
+@use "../style/partials/mixins" as *;
 
-.active{
-    background-color: $primary2;
-}
-.deactive {
-    background-color: $grey4;
+.d-types {
+    display:flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 4px;
+
+    padding: 0;
+ 
+    .active {
+        @include t-btn;
+        background-color: $primary1;
+    }
+
+    .deactive {
+        @include t-btn;
+        background-color: $grey6;
+    }
+
+    .deactive:hover {
+        @include t-btn;
+        background-color: $grey8;
+    }
+
 }
 
 </style>
