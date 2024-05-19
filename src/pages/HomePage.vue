@@ -63,9 +63,9 @@ export default {
 
             <!-- main-content -->
             <div class="main-content">
-              <h1>Ristoranti:</h1>
+              <!-- <h1>Ristoranti:</h1> -->
 
-              <div class="row row-gap-2 py-5">
+              <div class="rest-list gap-3">
                 <RestaurantItem 
                   v-for="restaurant in filteredRestaurants"
                   :key="restaurant.id"
@@ -105,10 +105,18 @@ main {
 
   .main-content {
     flex-grow: 1;
-  }
 
-  h1 {
+    h1 {
     @include header-semi-prim;
+    }
+
+    .rest-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      // overflow-y: auto;
+      max-height: fit-content;
+    }
+
   }
 }
 

@@ -11,36 +11,67 @@ export default {
 </script>
 
 <template>
-
-<div class="col-6">
-
-    <div class="card p-3">
-        <h2>
-            {{ restaurant.restaurant_name }}
-        </h2>
-        <img 
-            :src="'http://localhost:8000/storage/' + restaurant.image" 
-            :alt="'immagine ristorante ' + restaurant.restaurant_name"
-        >
-
-        <p>
-            {{ restaurant.address }}
-        </p>
-
-        <div>
-            <span 
-                v-for="currentType in restaurant.types"
-                class="badge rounded-pill bg-primary"
-            >
-                {{ currentType.name }}
-            </span>
+        <div class="rest-card">
+            <div class="rest-card__top">
+                <img 
+                :src="'http://localhost:8000/storage/' + restaurant.image" 
+                :alt="'immagine ristorante ' + restaurant.restaurant_name"
+                >
+                <h2>{{ restaurant.restaurant_name }}</h2>
+                <p>{{ restaurant.address }}</p>
+            </div>
+            <div class="rest-card__type">
+                <span 
+                    v-for="currentType in restaurant.types"
+                    class="type"
+                >
+                    {{ currentType.name }}
+                </span>
+            </div>
         </div>
-
-    </div>
-</div>
-
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@use "../style/partials/variables" as *;
+@use "../style/partials/mixins" as *;
 
+.rest-card {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .rest-card__top {
+
+        background-color: $light;
+        padding: 14px;
+        flex-grow: 1;
+
+        h2 {
+            @include title2-semi;
+        }
+
+        p {
+            font-size: $txt6;
+        }
+    }
+
+    .rest-card__type {
+        background-color: $primary1;
+        padding: 4px 8px;
+
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        
+        .type {
+        font-size: $txt6;
+        text-transform: uppercase;
+        color: $light;
+        }
+    
+    }
+
+}
 </style>
