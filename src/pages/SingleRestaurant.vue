@@ -11,8 +11,8 @@ export default {
 
     data() {
         return {
-            restaurant: null,
-            restaurantId: null,
+            restaurant: [],
+            restaurantId: '',
 
             store,
         }
@@ -22,7 +22,8 @@ export default {
         this.restaurantId = this.$route.params.id;
 
         axios.get(this.store.baseApiUrl + '/restaurants/' + this.restaurantId).then(res => {
-            console.log(res);
+            this.restaurant = res.data.restaurant
+            console.log(this.restaurant);
         })
     }
 
@@ -31,7 +32,26 @@ export default {
 </script>
 
 <template>
+    <div class="container py-4 ">
+        <h3 class="mb-4">{{ restaurant.restaurant_name }}</h3>
+        <ul class="list-group">
+            <li 
+           v-for="dish in restaurant.dishes"
+            class="list-group-item"
+            >
+            <div class="d-flex justify-content-between ">
+                <h4>
+                    {{ dish.name }}
+                </h4>
 
+                <span>
+                   € {{ dish.price }}
+                </span>
+            </div>
+            <p>{{ dish.description }}</p>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <style lang="scss" scoped>

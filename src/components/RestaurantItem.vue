@@ -13,7 +13,7 @@ export default {
 <template>
     <router-link :to="{name: 'single-restaurant', params: {id: restaurant.id}}">
 
-        <div class="rest-card">
+        <div class="rest-card hover">
             <div class="rest-card__top">
                 <img 
                 :src="'http://localhost:8000/storage/' + restaurant.image" 
@@ -43,6 +43,8 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
+    
 
     .rest-card__top {
 
@@ -77,4 +79,9 @@ export default {
     }
 
 }
+
+// test
+.hover:hover {
+        border: 1px solid $primary1;
+} 
 </style>
