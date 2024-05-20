@@ -11,6 +11,8 @@ export default {
 </script>
 
 <template>
+    <router-link :to="{name: 'single-restaurant', params: {id: restaurant.id}}">
+
         <div class="rest-card">
             <div class="rest-card__top">
                 <img 
@@ -22,13 +24,14 @@ export default {
             </div>
             <div class="rest-card__type">
                 <span 
-                    v-for="currentType in restaurant.types"
-                    class="type"
+                v-for="currentType in restaurant.types"
+                class="type"
                 >
                     {{ currentType.name }}
                 </span>
             </div>
         </div>
+    </router-link>
 </template>
 
 <style lang="scss" scoped>
