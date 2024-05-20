@@ -49,6 +49,8 @@ export default {
                 </span>
             </div>
             <p>{{ dish.description }}</p>
+            <img :src="'http://localhost:8000/storage/' + dish.image " alt="">
+            
             </li>
         </ul>
     </div>
