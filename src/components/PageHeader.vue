@@ -69,6 +69,10 @@ nav {
         gap: 1rem;
 
         cursor: pointer;
+
+        :hover {
+            color: #ef4860;
+        }
     }
 
     .icon-container {

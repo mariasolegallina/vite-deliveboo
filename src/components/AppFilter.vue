@@ -30,7 +30,7 @@ export default {
 
 <template>
     <ul class="d-types">
-        <li v-for="currentType in store.types" :key="currentType.name">
+        <li v-for="currentType in store.types" :key="currentType.name" class="mb-1">
             <a href="#" 
                 :class="['', activeTypes.includes(currentType.name) ? 'active' : 'deactive']"
                 @click="filterByTypes(currentType.name)"
