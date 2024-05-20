@@ -27,9 +27,10 @@ export default {
         if (activeTypes.length == 0 ) {
             this.filteredRestaurants = this.store.restaurants;  
         } else {
-            this.filteredRestaurants = this.store.restaurants.filter(restaurant => 
-                restaurant.types.some(t => activeTypes.includes (t.name))
-            );
+          axios.get(this.store.baseApiUrl + '/restaurants', {params: {type: activeTypes}}).then(res=>[
+            console.log(res),
+            this.filteredRestaurants = res.data.results.data,
+          ])
         }
       }
     },
@@ -68,7 +69,7 @@ export default {
               <div class="rest-list gap-3">
                 <RestaurantItem 
                   v-for="restaurant in filteredRestaurants"
-                  :key="restaurant.id"
+                  :key="restaurant.restaurant_name"
                   :restaurant="restaurant">
                 </RestaurantItem>
               </div>
