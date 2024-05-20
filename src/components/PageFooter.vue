@@ -22,8 +22,15 @@ name: 'PageFooter',
 @use "../style/partials/variables" as *;
 
 footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
     background-color: $accent2;
-    color: $light;
+
+    p {
+        color: white;
+    }
+
 }
 
 </style>

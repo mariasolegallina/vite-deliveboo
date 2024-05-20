@@ -85,6 +85,7 @@ export default {
 
 main {
     background-color: $grey1;
+    min-height: calc(100vh - 120px);
 };
 
 .container {
