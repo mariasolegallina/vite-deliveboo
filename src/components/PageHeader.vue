@@ -10,7 +10,7 @@ export default {
 
     methods: {
         redirectToLogin() {
-            window.location.href = 'http://127.0.0.1:8000/';
+            window.location.href = 'http://127.0.0.1:8000/admin';
         }
     }
 
@@ -90,6 +90,7 @@ nav {
         visibility: hidden;
         opacity: 0;
         transition: opacity 0.5s, visibility 0.5s;
+        cursor: default;
     }
 
     .icon-container:hover .login-tooltip {
