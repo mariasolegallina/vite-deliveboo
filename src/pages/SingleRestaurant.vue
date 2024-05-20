@@ -37,6 +37,7 @@ export default {
         <ul class="list-group">
             <li 
            v-for="dish in restaurant.dishes"
+           v-show="dish.viewable"
             class="list-group-item"
             >
             <div class="d-flex justify-content-between ">
