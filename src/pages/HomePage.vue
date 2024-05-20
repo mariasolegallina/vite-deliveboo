@@ -27,18 +27,17 @@ export default {
         if (activeTypes.length == 0 ) {
             this.filteredRestaurants = this.store.restaurants;  
         } else {
-          axios.get(this.store.baseApiUrl + '/restaurants', {params: {type: activeTypes}}).then(res=>[
-            console.log(res),
-            this.filteredRestaurants = res.data.results.data,
-          ])
+            this.filteredRestaurants = this.store.restaurants.filter(restaurant => 
+                restaurant.types.some(t => activeTypes.includes (t.name))
+            );
         }
       }
     },
 
     mounted() {
         axios.get(this.store.baseApiUrl + '/restaurants').then(res => [
-          this.store.restaurants = res.data.results.data,
-          this.filteredRestaurants = res.data.results.data 
+          this.store.restaurants = res.data.results,
+          this.filteredRestaurants = res.data.results
         ]),
         
         axios.get(this.store.baseApiUrl + '/types').then(res=>[
@@ -69,7 +68,7 @@ export default {
               <div class="rest-list gap-3">
                 <RestaurantItem 
                   v-for="restaurant in filteredRestaurants"
-                  :key="restaurant.restaurant_name"
+                  :key="restaurant.id"
                   :restaurant="restaurant">
                 </RestaurantItem>
               </div>
