@@ -17,7 +17,7 @@ export default {
             <img 
                 :src="'http://localhost:8000/storage/' + restaurant.image" 
                 :alt="'immagine ristorante ' + restaurant.restaurant_name"
-                >
+            >
             <div class="rest-card__top">
                 <h2>{{ restaurant.restaurant_name }}</h2>
                 <p>{{ restaurant.address }}</p>
