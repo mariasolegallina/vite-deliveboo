@@ -14,11 +14,11 @@ export default {
     <router-link :to="{name: 'single-restaurant', params: {id: restaurant.id}}">
 
         <div class="rest-card hover">
-            <div class="rest-card__top">
-                <img 
+            <img 
                 :src="'http://localhost:8000/storage/' + restaurant.image" 
                 :alt="'immagine ristorante ' + restaurant.restaurant_name"
                 >
+            <div class="rest-card__top">
                 <h2>{{ restaurant.restaurant_name }}</h2>
                 <p>{{ restaurant.address }}</p>
             </div>
@@ -43,6 +43,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
     
     
 
