@@ -49,33 +49,31 @@ export default {
 </script>
 
 <template>
-<main>
-    <section>
-        <div class="container">
+  <section>
+      <div class="container">
 
-            <!-- sidebar -->
-            <div class="side-bar">
-              <h2>Filtra</h2>
+          <!-- sidebar -->
+          <div class="side-bar">
+            <h2>Filtra</h2>
 
-              <!-- filters -->
-              <AppFilter @filter="handleFilter"></AppFilter>
+            <!-- filters -->
+            <AppFilter @filter="handleFilter"></AppFilter>
+          </div>
+
+          <!-- main-content -->
+          <div class="main-content">
+            <!-- <h1>Ristoranti:</h1> -->
+
+            <div class="rest-list gap-3">
+              <RestaurantItem 
+                v-for="restaurant in filteredRestaurants"
+                :key="restaurant.id"
+                :restaurant="restaurant">
+              </RestaurantItem>
             </div>
-
-            <!-- main-content -->
-            <div class="main-content">
-              <!-- <h1>Ristoranti:</h1> -->
-
-              <div class="rest-list gap-3">
-                <RestaurantItem 
-                  v-for="restaurant in filteredRestaurants"
-                  :key="restaurant.id"
-                  :restaurant="restaurant">
-                </RestaurantItem>
-              </div>
-            </div>
-        </div>
-    </section>
-</main>
+          </div>
+      </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>

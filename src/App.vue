@@ -23,8 +23,9 @@ export default {
 
 <template>
 <PageHeader></PageHeader>
-
+<main>
   <router-view></router-view>
+</main>
 
 <PageFooter></PageFooter>
 </template>
@@ -32,7 +33,16 @@ export default {
 
 
 <style lang="scss">
-
 @use "./style/general.scss";
 
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  padding: 0;
+}
 </style>
