@@ -4,19 +4,9 @@ export default {
 
     data() {
         return {
-            basket: [
-                { name: 'Piatto 1', price: 10, quantity: 2 },
-                { name: 'Piatto 2', price: 15, quantity: 1 },
-            ],
-            shippingCost: 5,
-            restaurant: {
-                restaurant_name: "Ristorante Esempio",
-                address: "Via Esempio 123",
-                types: [
-                    { name: "Italiano" },
-                    { name: "Pizza" }
-                ]
-            }
+            dish_name: localStorage.getItem("dish_name"),
+            dish_price: localStorage.getItem("dish_price"),
+            dish_qty: localStorage.getItem("dish_qty")
         };
     },
 
@@ -30,33 +20,20 @@ export default {
 
 <template>
     <section>
+
+
+
         <div class="container">
             <div class="basket">
             <h2>Il tuo carrello</h2>
-            <ul>
-                <li v-for="item in basket" :key="item.name">
-                    {{ item.name }} - {{ item.price }}€ x {{ item.quantity }} = {{ item.price * item.quantity }}€
-                </li>
-            </ul>
-            <p>Costo di spedizione: {{ shippingCost }}€</p>
-            <p>Prezzo totale: {{ totalPrice }}€</p>
+            
+                nome: {{ dish_name }}
+                prezzo: {{ dish_price }}
+                quantità: {{ dish_qty }}
+            
+            </div>
         </div>
 
-        <div class="rest-card hover">
-            <div class="rest-card__top">
-                <h2>{{ restaurant.restaurant_name }}</h2>
-                <p>{{ restaurant.address }}</p>
-            </div>
-            <div class="rest-card__type">
-                <span 
-                v-for="currentType in restaurant.types"
-                class="type"
-                >
-                    {{ currentType.name }}
-                </span>
-            </div>
-        </div>
-        </div>
     </section>
 </template>
 

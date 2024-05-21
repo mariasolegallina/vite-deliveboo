@@ -22,15 +22,27 @@ export default {
         }
     },
 
+    methods: {
+
+        addToCart(value) {
+            
+            localStorage.setItem('dish_name', value.name);
+            localStorage.setItem('dish_price', value.price);
+            localStorage.setItem('dish_qty', this.count);
+        }
+    },
+
 
     
 
     mounted() {
+
+        console.log(this.restaurantId);
+
         this.restaurantId = this.$route.params.id;
 
         axios.get(this.store.baseApiUrl + '/restaurants/' + this.restaurantId).then(res => {
             this.restaurant = res.data.restaurant
-            console.log(this.restaurant);
         })
     }
 
@@ -59,10 +71,7 @@ export default {
                         </div>
                         <!-- + - button -->
                         <div class="btn-group btn-group-sm" role="group" aria-label="Default button group">
-                            <button @click="count--" type="button" class="btn btn-outline-primary">-</button>
-                            <button type="button" class="btn btn-outline-primary">{{ count }}</button>
-                            <button @click="count++" type="button" class="btn btn-outline-primary">+</button>
-                            <button type="button" class="btn btn-primary">Aggiungi al carrello</button>
+                            <button @click="addToCart(dish)" type="button" class="btn btn-primary">Aggiungi al carrello</button>
                         </div>
                     </div>                
                 </li>
