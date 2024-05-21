@@ -21,14 +21,19 @@ export default {
     <header>
         <section>
             <nav class="container">
-                <div class="logo">
+                <router-link :to="{name: 'home'}">
+                    <div class="logo">
                     <img src="/img/deliveboo-logo.png" alt="">
                 </div>
+                </router-link>
                 <div class="icons">
+                    <!-- link to login -->
                     <div class="icon-container" @mouseover="hover = true" @mouseleave="hover = false">
                         <i class="fa-solid fa-user" @click="redirectToLogin()"></i>
                         <span v-show="hover" class="login-tooltip">Lavora con noi</span>
                     </div>
+
+                    <!-- link to basket -->
                     <router-link :to="{name: 'basket'}">
                         <i class="fa-solid fa-basket-shopping"></i>
                     </router-link>
