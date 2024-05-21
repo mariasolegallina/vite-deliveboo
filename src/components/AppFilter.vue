@@ -30,11 +30,14 @@ export default {
 
 <template>
     <ul class="d-types">
-        <li v-for="currentType in store.types" :key="currentType.name" class="mb-1">
-            <a href="#" 
+        <li v-for="currentType in store.types" :key="currentType.name">
+            <div class="type">
+                <a href="#" 
                 :class="['', activeTypes.includes(currentType.name) ? 'active' : 'deactive']"
                 @click="filterByTypes(currentType.name)"
-            >{{ currentType.name }}</a>
+            ><i :class="activeTypes.includes(currentType.name) ? 'fa-regular fa-square-check' : 'fa-regular fa-square'"></i></a>
+            <span>{{ currentType.name }}</span>
+            </div>
         </li>
     </ul>
 
@@ -48,23 +51,33 @@ export default {
     display:flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: 4px;
+    gap: 10px;
 
     padding: 0;
+
+    .type {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
  
     .active {
-        @include t-btn;
-        background-color: $primary1;
+        i {
+            color: $primary1;
+        }
     }
 
     .deactive {
-        @include t-btn;
-        background-color: $grey6;
+        i {
+            color: $grey8;
+        }
     }
 
     .deactive:hover {
-        @include t-btn;
-        background-color: $grey8;
+        i {
+            color: $primary1;
+
+        }
     }
 
 }

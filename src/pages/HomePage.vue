@@ -77,23 +77,20 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-// @use "../style/general.scss";
 @use "../style/partials/variables" as *;
 @use "../style/partials/mixins" as *;
 
-main {
-    background-color: $grey1;
-    min-height: calc(100vh - 120px);
-};
+// main {
+//     background-color: $grey1;
+//     min-height: calc(100vh - 120px);
+// };
 
 .container {
   display: flex;
   gap: 24px;
 
   .side-bar {
-    background-color: $grey2;
-    padding: 24px;
-    // border-radius: 6px;
+    margin-right: 14px;
 
     h2 {
       @include title2-semi;
