@@ -32,9 +32,9 @@ export default {
 </script>
 
 <template>
-    <div class="container py-4 ">
+    <div class="container py-4">
         <h3 class="mb-4">{{ restaurant.restaurant_name }}</h3>
-        <ul class="list-group">
+        <ul class="list-group mb-4">
             <li 
            v-for="dish in restaurant.dishes"
            v-show="dish.viewable"
@@ -54,6 +54,10 @@ export default {
             
             </li>
         </ul>
+        
+        <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
+            <i class="fa-solid fa-chevron-left"></i> Indietro
+        </router-link>
     </div>
 </template>
 
