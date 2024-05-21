@@ -27,9 +27,13 @@ export default {
         if (activeTypes.length == 0 ) {
             this.filteredRestaurants = this.store.restaurants;  
         } else {
-            this.filteredRestaurants = this.store.restaurants.filter(restaurant => 
-            activeTypes.every(type => restaurant.types.map (t => t.name).includes(type))
-            );
+          axios.get(this.store.baseApiUrl + '/restaurants').then(res => [
+            console.log(res),
+            this.store.restaurants = res.data.results,
+          ]),
+          this.filteredRestaurants = this.store.restaurants.filter(restaurant => 
+          activeTypes.every(type => restaurant.types.map (t => t.name).includes(type))
+          );
         }
       }
     },
