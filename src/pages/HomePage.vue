@@ -28,7 +28,7 @@ export default {
             this.filteredRestaurants = this.store.restaurants;  
         } else {
             this.filteredRestaurants = this.store.restaurants.filter(restaurant => 
-                restaurant.types.some(t => activeTypes.includes (t.name))
+            activeTypes.every(type => restaurant.types.map (t => t.name).includes(type))
             );
         }
       }
