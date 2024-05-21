@@ -30,7 +30,8 @@ export default {
 
 <template>
     <section>
-        <div class="basket">
+        <div class="container">
+            <div class="basket">
             <h2>Il tuo carrello</h2>
             <ul>
                 <li v-for="item in basket" :key="item.name">
@@ -55,15 +56,17 @@ export default {
                 </span>
             </div>
         </div>
+        </div>
     </section>
 </template>
 
 <style lang="scss" scoped>
+@use "../style/partials/variables" as *;
+@use "../style/partials/mixins" as *;
+
 .basket {
-    margin: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    @include box1;
+    
 }
 
 .basket h2 {
