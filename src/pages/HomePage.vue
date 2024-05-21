@@ -66,8 +66,8 @@ export default {
 
           <!-- main-content -->
           <div class="main-content">
-            <!-- <h1>Ristoranti:</h1> -->
 
+            <!-- restaurants list -->
             <div class="rest-list gap-3">
               <RestaurantItem 
                 v-for="restaurant in filteredRestaurants"
@@ -83,11 +83,6 @@ export default {
 <style lang="scss" scoped>
 @use "../style/partials/variables" as *;
 @use "../style/partials/mixins" as *;
-
-// main {
-//     background-color: $grey1;
-//     min-height: calc(100vh - 120px);
-// };
 
 .container {
   display: flex;

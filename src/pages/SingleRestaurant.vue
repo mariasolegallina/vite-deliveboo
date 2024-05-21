@@ -15,8 +15,15 @@ export default {
             restaurantId: '',
 
             store,
+
+            count:1,
+
+            
         }
     },
+
+
+    
 
     mounted() {
         this.restaurantId = this.$route.params.id;
@@ -32,36 +39,63 @@ export default {
 </script>
 
 <template>
-    <div class="container py-4">
-        <h3 class="mb-4">{{ restaurant.restaurant_name }}</h3>
-        <ul class="list-group mb-4">
-            <li 
-                v-for="dish in restaurant.dishes"
-                v-show="dish.viewable"
-                class="list-group-item"
-            >
-            <div class="d-flex justify-content-between ">
-                <h4>
-                    {{ dish.name }}
-                </h4>
-
-                <span>
-                   € {{ dish.price }}
-                </span>
-            </div>
-            <p>{{ dish.description }}</p>
-            <img :src="'http://localhost:8000/storage/' + dish.image " alt="">
+    <section>
+        <div class="container">
+            <h3 class='rest_title'>{{ restaurant.restaurant_name }}</h3>
+            <ul class="list-group">
+                <li 
+                    v-for="dish in restaurant.dishes"
+                    v-show="dish.viewable"
+                    class="list-group-item"
+                >
+                    <div class="dish-card">
+                        <div class="dish-cart__left">
+                            <img :src="'http://localhost:8000/storage/' + dish.image " alt="">
+                            <div class="texts">
+                                <h3>{{ dish.name }}</h3>
+                                <p>{{ dish.description }}</p>
+                                <span>€ {{ dish.price }}</span>
+                            </div>
+                        </div>
+                        <!-- + - button -->
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Default button group">
+                            <button @click="count--" type="button" class="btn btn-outline-primary">-</button>
+                            <button type="button" class="btn btn-outline-primary">{{ count }}</button>
+                            <button @click="count++" type="button" class="btn btn-outline-primary">+</button>
+                        </div>
+                    </div>                
+                </li>
+            </ul>
             
-            </li>
-        </ul>
-        
-        <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
-            <i class="fa-solid fa-chevron-left"></i> Indietro
-        </router-link>
-    </div>
+            <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
+                <i class="fa-solid fa-chevron-left"></i> Indietro
+            </router-link>
+        </div>
+    </section>
 </template>
 
 <style lang="scss" scoped>
+@use "../style/partials/variables" as *;
+@use "../style/partials/mixins" as *;
 
+.rest_title {
+@include title-semi;
+margin-bottom: 20px;
+}
+
+.dish-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .dish-card__left {
+        display: flex;
+        align-items: center;
+    }
+
+    .texts {
+        margin-left: 15px;
+    }
+}
 
 </style>
