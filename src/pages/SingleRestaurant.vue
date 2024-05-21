@@ -36,9 +36,9 @@ export default {
         <h3 class="mb-4">{{ restaurant.restaurant_name }}</h3>
         <ul class="list-group mb-4">
             <li 
-           v-for="dish in restaurant.dishes"
-           v-show="dish.viewable"
-            class="list-group-item"
+                v-for="dish in restaurant.dishes"
+                v-show="dish.viewable"
+                class="list-group-item"
             >
             <div class="d-flex justify-content-between ">
                 <h4>
