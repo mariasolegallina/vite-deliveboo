@@ -29,7 +29,9 @@ export default {
                         <i class="fa-solid fa-user" @click="redirectToLogin()"></i>
                         <span v-show="hover" class="login-tooltip">Lavora con noi</span>
                     </div>
-                    <i class="fa-solid fa-basket-shopping"></i>
+                    <router-link :to="{name: 'basket'}">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </router-link>
                 </div>
             </nav>
         </section>
