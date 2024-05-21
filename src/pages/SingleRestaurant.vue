@@ -62,6 +62,7 @@ export default {
                             <button @click="count--" type="button" class="btn btn-outline-primary">-</button>
                             <button type="button" class="btn btn-outline-primary">{{ count }}</button>
                             <button @click="count++" type="button" class="btn btn-outline-primary">+</button>
+                            <button type="button" class="btn btn-primary">Aggiungi al carrello</button>
                         </div>
                     </div>                
                 </li>
