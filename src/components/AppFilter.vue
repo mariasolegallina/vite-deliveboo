@@ -35,8 +35,7 @@ export default {
                 <a href="#" 
                 :class="['', activeTypes.includes(currentType.name) ? 'active' : 'deactive']"
                 @click="filterByTypes(currentType.name)"
-            ><i :class="activeTypes.includes(currentType.name) ? 'fa-regular fa-square-check' : 'fa-regular fa-square'"></i></a>
-            <span>{{ currentType.name }}</span>
+            ><i :class="activeTypes.includes(currentType.name) ? 'fa-regular fa-square-check' : 'fa-regular fa-square'"></i><span>{{ currentType.name }}</span></a>
             </div>
         </li>
     </ul>
@@ -56,9 +55,11 @@ export default {
     padding: 0;
 
     .type {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
     }
  
     .active {
