@@ -46,13 +46,21 @@ export default {
 // @use "../style/general.scss";
 @use "../style/partials/variables" as *;
 
+// header {
+//     background-color: $light;
+//     filter: drop-shadow(0 0 0.2rem $grey2);
+
+// }
+
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     background-color: $light;
     filter: drop-shadow(0 0 0.2rem $grey2);
-
 }
-
-;
 
 nav {
     display: flex;
