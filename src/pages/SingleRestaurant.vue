@@ -96,14 +96,14 @@ export default {
         <div class="container">
             <h3 class='rest_title'>{{ restaurant.restaurant_name }}</h3>
             <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-            <ul class="list-group">
+            <ul class="list-group mb-5">
                 <li 
                     v-for="dish in restaurant.dishes"
                     v-show="dish.viewable"
                     class="list-group-item"
                 >
                     <div class="dish-card">
-                        <div class="dish-cart__left">
+                        <div class="dish-card__left">
                             <img :src="'http://localhost:8000/storage/' + dish.image " alt="">
                             <div class="texts">
                                 <h3>{{ dish.name }}</h3>
@@ -113,7 +113,7 @@ export default {
                         </div>
                         
                         
-                        <div>
+                        <div class="dish-card__right">
                             <button type="button" class="btn btn-outline-danger " @click="removeFromCart(dish, 1)">-</button>
                             
                             <span class="px-3">{{ getQuantity(dish) }}</span>
@@ -148,11 +148,15 @@ margin-bottom: 20px;
     .dish-card__left {
         display: flex;
         align-items: center;
+        max-width: 70%;
     }
 
     .texts {
         margin-left: 15px;
     }
+}
+.dish-card__rigth {
+    max-width: 30%;
 }
 
 </style>

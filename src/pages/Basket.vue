@@ -61,69 +61,57 @@ export default {
 </script>
 
 <template>
-    <section>
+<section>
+    <div class="container">
 
+        <h2>Il tuo carrello</h2>
 
+        <div v-if="cart.length > 0" class="basket mb-5 p-3">
+            <h3>{{ cart[0].restaurantInfo.restaurant_name }}</h3>
 
-        <div class="container">
+            <div class="basket mb-5 p-3">
 
-            <h2>Il tuo carrello</h2>
+                <div v-for="item in cart" :key="item.dish.id" class="mb-3">
 
-            <div v-if="cart.length > 0" class="basket mb-5 p-3">
-
-                <h3>{{ cart[0].restaurantInfo.restaurant_name }}</h3>
-
-                <div class="basket mb-5 p-3">
-
-                    <div v-for="item in cart" :key="item.dish.id" class="mb-3">
-
-
-                        <div class="mb-3">
-                            {{ item.dish.name }} x {{ item.quantity }}
-                        </div>
-
-
-                        <div class="mb-3">
-                            € {{ dishSumPrice(item) }}
-                        </div>
-
-                        <div>
-
-                            <button type="button" class="btn btn-outline-danger "
-                                @click="removeQuantity(item)">-</button>
-
-                            <span class="px-3">
-                                {{ item.quantity }}
-                            </span>
-
-                            <button type="button" class="btn btn-outline-danger " @click="addQuantity(item)">+</button>
-
-                            <button type="button" class="btn btn-outline-danger ms-3" @click="removeDish(item)">Rimuovi
-                                piatto</button>
-
-                        </div>
-
-                        <div>
-                            <button type="button" class="btn btn-outline-danger ms-3" @click="removeAll()">Svuota
-                                carrello</button>
-
-                        </div>
+                    <h6 class="mb-3">
+                        {{ item.dish.name }} x {{ item.quantity }}
+                    </h6>
+                    <div class="mb-3">
+                        € {{ dishSumPrice(item) }}
                     </div>
+
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-outline-danger " @click="removeQuantity(item)">-</button>
+                        <span class="px-3">
+                            {{ item.quantity }}
+                        </span>
+
+                        <button type="button" class="btn btn-outline-danger " @click="addQuantity(item)">+</button>
+
+                        <button type="button" class="btn btn-outline-danger ms-3" @click="removeDish(item)">Rimuovi piatto</button>
+
+                    </div>
+
                 </div>
-
-                <div class="text-end ">Totale: € {{ totalPrice }}</div>
-
+                <div class="d-flex justify-content-end ">
+                    <button type="button" class="btn btn-outline-danger ms-3" @click="removeAll()">Svuota carrello</button>
+                </div>
+                    
             </div>
-
-
-            <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
-                <i class="fa-solid fa-chevron-left"></i> Indietro
-            </router-link>
-
-
+            <div class="text-end ">
+                Totale: € {{ totalPrice }}
+            </div>
         </div>
+        <div v-else class="my-5 text-center ">
+            Il tuo carrello è vuoto attualmente. <br>
+            Torna indietro per vedere i nostri ristoranti
+        </div>
+        <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
+            <i class="fa-solid fa-chevron-left"></i> Indietro
+        </router-link>
 
-    </section>
+    </div>
+</section>
 </template>
 
 <style lang="scss" scoped>
