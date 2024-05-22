@@ -34,8 +34,9 @@ export default {
                     </div>
 
                     <!-- link to basket -->
-                    <router-link :to="{name: 'basket'}">
+                    <router-link :to="{name: 'basket'}"  class="icon-container"@mouseover="hover = true" @mouseleave="hover = false">
                         <i class="fa-solid fa-basket-shopping"></i>
+                        <span v-show="hover" class="login-tooltip">Vai al carrello</span>
                     </router-link>
                 </div>
             </nav>
