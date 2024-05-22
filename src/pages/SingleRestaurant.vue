@@ -16,10 +16,7 @@ export default {
 
             store,
 
-            count: 1,
-
             cartItems: [],
-
             
         }
     },
@@ -36,14 +33,14 @@ export default {
             items.forEach(item => {
                 const existingItem = cartItems.find(cartItem => cartItem.name === item.name);
                 if (existingItem) {
-                existingItem.quantity += item.quantity;
+                    existingItem.quantity += item.quantity;
                 } else {
-                cartItems.push(item);
+                    cartItems.push(item);
                 }
             });
 
             localStorage.setItem('cart', JSON.stringify(cartItems));
-            this.$emit('cartUpdated');
+                this.$emit('cartUpdated');
             },
 
     },
@@ -51,7 +48,7 @@ export default {
     created() {
         const storedCart = JSON.parse(localStorage.getItem('cart'));
         if (storedCart) {
-        this.cartItems = storedCart;
+            this.cartItems = storedCart;
         }
     },
 

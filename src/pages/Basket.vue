@@ -7,14 +7,16 @@ export default {
 
     data() {
         return {
-            store
+            store,
+
+            cart: JSON.parse(localStorage.getItem('cart')),
         };
     },
 
     computed: {
         totalPrice() {
             return this.basket.reduce((acc, item) => acc + item.price * item.quantity, 0) + this.shippingCost;
-        }
+        },
     },
 }
 </script>
@@ -27,6 +29,10 @@ export default {
         <div class="container">
             <div class="basket">
             <h2>Il tuo carrello</h2>
+
+            <div v-for="item in cart">
+                {{ item.name }}
+            </div>
             
     
             </div>
