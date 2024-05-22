@@ -1,14 +1,12 @@
 <script>
-
 import { store } from './store.js';
-
 import PageHeader from './components/PageHeader.vue';
-import PageFooter from './components/PageFooter.vue'
+import PageFooter from './components/PageFooter.vue';
 
 export default {
   components: {
-    PageFooter,
     PageHeader,
+    PageFooter,
   },
 
   data() {
@@ -16,18 +14,32 @@ export default {
       store,
     }
   },
+
+  mounted() {
+    this.setMainPadding();
+    window.addEventListener('resize', this.setMainPadding);
+  },
+
+  methods: {
+    setMainPadding() {
+      const headerHeight = this.$refs.headerRef.$el.offsetHeight;
+      this.$refs.mainRef.style.paddingTop = headerHeight + 'px';
+    }
+  },
+  
+  beforeDestroy() {
+    window.removeEventListener('resize', this.setMainPadding);
+  }
 }
 </script>
 
 
-
 <template>
-<PageHeader></PageHeader>
-<main>
-  <router-view></router-view>
-</main>
-
-<PageFooter></PageFooter>
+  <PageHeader ref="headerRef"></PageHeader>
+  <main ref="mainRef">
+    <router-view></router-view>
+  </main>
+  <PageFooter></PageFooter>
 </template>
 
 

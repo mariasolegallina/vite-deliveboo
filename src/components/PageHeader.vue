@@ -22,16 +22,13 @@ export default {
     <header>
         <section>
             <nav class="container">
-
                 <!-- link alla lista  -->
                 <router-link :to="{name: 'home'}">
                     <div class="logo">
-                        <img src="/img/deliveboo-logo.png" alt="">
-                    </div>
+                    <img src="/img/deliveboo-logo.png" alt="">
+                </div>
                 </router-link>
-
                 <div class="icons">
-
                     <!-- link al login -->
                     <div class="icon-container" @mouseover="hover = true" @mouseleave="hover = false">
                         <i class="fa-solid fa-user" @click="redirectToLogin()"></i>
@@ -43,9 +40,7 @@ export default {
                         <i class="fa-solid fa-basket-shopping"></i>
                         <span v-show="hover" class="login-tooltip">Vai al carrello</span>
                     </router-link>
-                
                 </div>
-            
             </nav>
         </section>
     </header>
@@ -55,20 +50,34 @@ export default {
 // @use "../style/general.scss";
 @use "../style/partials/variables" as *;
 
+// header {
+//     background-color: $light;
+//     filter: drop-shadow(0 0 0.2rem $grey2);
+
+// }
+
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     background-color: $light;
     filter: drop-shadow(0 0 0.2rem $grey2);
 }
-
-;
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    padding: 16px 10px;
+
+
     .logo {
-        max-width: 10rem;
+
+        max-width: 9rem;
+
     }
 
     .icons {
@@ -92,14 +101,14 @@ nav {
     }
 
     .login-tooltip {
-        font-size: 15px;
+        font-size: $txt5;
         text-wrap: nowrap;
         position: absolute;
         top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #ef4860;
-        color: white;
+        left: 0%;
+        transform: translateX(-70%);
+        background-color: $grey2;
+        color: $grey7;
         padding: 4px 8px;
         border-radius: 10px;
         visibility: hidden;
