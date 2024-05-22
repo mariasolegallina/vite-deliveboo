@@ -9,7 +9,6 @@ export default {
     },
 
     methods: {
-        // percorso per pagina login laravel
         redirectToLogin() {
             window.location.href = 'http://127.0.0.1:8000/admin';
         }
@@ -20,29 +19,29 @@ export default {
 
 <template>
     <header>
-        <section>
-            <nav class="container">
-                <!-- link alla lista  -->
-                <router-link :to="{name: 'home'}">
-                    <div class="logo">
-                    <img src="/img/deliveboo-logo.png" alt="">
-                </div>
-                </router-link>
-                <div class="icons">
-                    <!-- link al login -->
-                    <div class="icon-container" @mouseover="hover = true" @mouseleave="hover = false">
-                        <i class="fa-solid fa-user" @click="redirectToLogin()"></i>
-                        <span v-show="hover" class="login-tooltip">Lavora con noi</span>
-                    </div>
+        <nav class="container">
 
-                    <!-- link al carrello -->
-                    <router-link :to="{name: 'basket'}"  class="icon-container"@mouseover="hover = true" @mouseleave="hover = false">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                        <span v-show="hover" class="login-tooltip">Vai al carrello</span>
-                    </router-link>
+            <!-- link alla lista -->
+            <router-link :to="{name: 'home'}">
+                <div class="logo">
+                <img src="/img/deliveboo-logo.png" alt="">
+            </div>
+            </router-link>
+            <div class="icons">
+
+                <!-- link al carrello -->
+                <router-link :to="{name: 'basket'}"  class="icon-container"@mouseover="hover = true" @mouseleave="hover = false">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span v-show="hover" class="login-tooltip">Vai al carrello</span>
+                </router-link>
+
+                <!-- link al login -->
+                <div class="icon-container" @mouseover="hover = true" @mouseleave="hover = false">
+                    <i class="fa-solid fa-user" @click="redirectToLogin()"></i>
+                    <span v-show="hover" class="login-tooltip">Hai un ristorante?</span>
                 </div>
-            </nav>
-        </section>
+            </div>
+        </nav>
     </header>
 </template>
 
@@ -50,11 +49,6 @@ export default {
 // @use "../style/general.scss";
 @use "../style/partials/variables" as *;
 
-// header {
-//     background-color: $light;
-//     filter: drop-shadow(0 0 0.2rem $grey2);
-
-// }
 
 header {
     position: fixed;
