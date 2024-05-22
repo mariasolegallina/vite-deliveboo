@@ -108,8 +108,8 @@ export default {
                     class="list-group-item"
                 >
                     <div class="dish-card">
-                        <div class="dish-card_img">
-                            <img :src="'http://localhost:8000/storage/' + dish.image " alt="">
+                        <div v-if="dish.image" class="dish-card_img">
+                            <img :src="'http://localhost:8000/storage/' + dish.image" alt="">
                         </div>
                         <div class="dish-card_text">
                             <div class="dish-info">

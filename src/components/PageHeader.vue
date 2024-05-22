@@ -19,28 +19,26 @@ export default {
 
 <template>
     <header>
-        <section>
-            <nav class="container">
-                <router-link :to="{name: 'home'}">
-                    <div class="logo">
-                    <img src="/img/deliveboo-logo.png" alt="">
-                </div>
+        <nav class="container">
+            <router-link :to="{name: 'home'}">
+                <div class="logo">
+                <img src="/img/deliveboo-logo.png" alt="">
+            </div>
+            </router-link>
+            <div class="icons">
+                <!-- link to basket -->
+                <router-link :to="{name: 'basket'}"  class="icon-container"@mouseover="hover = true" @mouseleave="hover = false">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span v-show="hover" class="login-tooltip">Vai al carrello</span>
                 </router-link>
-                <div class="icons">
-                    <!-- link to login -->
-                    <div class="icon-container" @mouseover="hover = true" @mouseleave="hover = false">
-                        <i class="fa-solid fa-user" @click="redirectToLogin()"></i>
-                        <span v-show="hover" class="login-tooltip">Lavora con noi</span>
-                    </div>
 
-                    <!-- link to basket -->
-                    <router-link :to="{name: 'basket'}"  class="icon-container"@mouseover="hover = true" @mouseleave="hover = false">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                        <span v-show="hover" class="login-tooltip">Vai al carrello</span>
-                    </router-link>
+                <!-- link to login -->
+                <div class="icon-container" @mouseover="hover = true" @mouseleave="hover = false">
+                    <i class="fa-solid fa-user" @click="redirectToLogin()"></i>
+                    <span v-show="hover" class="login-tooltip">Hai un ristorante?</span>
                 </div>
-            </nav>
-        </section>
+            </div>
+        </nav>
     </header>
 </template>
 
@@ -61,10 +59,12 @@ nav {
     justify-content: space-between;
     align-items: center;
 
+    padding: 16px 10px;
+
 
     .logo {
 
-        max-width: 10rem;
+        max-width: 9rem;
 
     }
 
@@ -89,14 +89,14 @@ nav {
     }
 
     .login-tooltip {
-        font-size: 15px;
+        font-size: $txt5;
         text-wrap: nowrap;
         position: absolute;
         top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #ef4860;
-        color: white;
+        left: 0%;
+        transform: translateX(-70%);
+        background-color: $grey2;
+        color: $grey7;
         padding: 4px 8px;
         border-radius: 10px;
         visibility: hidden;

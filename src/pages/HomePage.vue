@@ -48,6 +48,7 @@ export default {
           this.store.types = res.data.results,
         ])
     }
+
 }
 
 </script>
