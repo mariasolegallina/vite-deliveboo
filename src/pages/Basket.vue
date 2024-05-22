@@ -13,11 +13,23 @@ export default {
         };
     },
 
-    computed: {
-        totalPrice() {
-            return this.basket.reduce((acc, item) => acc + item.price * item.quantity, 0) + this.shippingCost;
+    methods: {
+        dishSumPrice(item) {
+            return (item.dish.price * item.quantity).toFixed(2);
         },
-    },
+
+        addQuantity(item) {
+            item.quantity++;
+        },
+
+        removeQuantity(item) {
+            if(item.quantity > 1) {
+                item.quantity--
+            }
+        }
+    }
+
+
 }
 </script>
 
@@ -30,10 +42,23 @@ export default {
             <div class="basket">
             <h2>Il tuo carrello</h2>
 
+                
             <div v-for="item in cart">
-                {{ item.name }}
+                <div>
+                    {{ item.dish.name }}
+
+                    <span>x {{ item.quantity }}</span>
+                </div>
+                <div>
+                    € {{ dishSumPrice(item)}}
+                </div>
+
+                <div>
+                    <button type="button" class="btn btn-outline-danger " @click="addQuantity(item)">+</button>
+                    
+                    <button type="button" class="btn btn-outline-danger " @click="removeQuantity(item)">-</button>
+                </div>
             </div>
-            
     
             </div>
         </div>
