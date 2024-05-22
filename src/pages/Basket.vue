@@ -73,39 +73,37 @@ export default {
             <h2>Il tuo carrello</h2>
 
                 
-            <div v-for="item in cart" :key="item.dish.id">
+            <div v-for="item in cart" :key="item.dish.id" class="mb-3">
+
+
+
+
+
+
+
+
+
+
                 <div class="mb-3">
                     {{ item.dish.name }} x {{ item.quantity }}
-
                 </div>
                 <div class="mb-3">
                     € {{ dishSumPrice(item)}}
                 </div>
-
-
-
                 <div >
-                    <button type="button" class="btn btn-outline-danger " @click="removeQuantity(item)">-</button>
-                    
+                    <button type="button" class="btn btn-outline-danger " @click="removeQuantity(item)">-</button>                  
                     <span class="px-3">
                         {{ item.quantity }}
                     </span>
-                    
                     <button type="button" class="btn btn-outline-danger " @click="addQuantity(item)">+</button>
-
-
                     <button type="button" class="btn btn-outline-danger " @click="removeDish(item)">Rimuovi piatto</button>
-
-
-
-
-
                 </div>
             </div>
 
-            <div>Totale: € {{ totalPrice }}</div>
 
-            
+
+
+            <div class="text-end ">Totale: € {{ totalPrice }}</div> 
         </div>
 
             <button type="button" class="btn btn-outline-danger " @click="removeAll()">Svuota carrello</button>

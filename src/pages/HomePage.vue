@@ -72,7 +72,8 @@ export default {
               <RestaurantItem 
                 v-for="restaurant in filteredRestaurants"
                 :key="restaurant.id"
-                :restaurant="restaurant">
+                :restaurant="restaurant"
+                >
               </RestaurantItem>
             </div>
           </div>

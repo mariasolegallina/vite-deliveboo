@@ -35,7 +35,7 @@ export default {
                 }
                 localStorage.setItem('cart', JSON.stringify(cart));
             } else {
-                alert("Puoi aggiungere piatti solo dallo stesso ristorante. Trmon.");
+                alert(`Puoi ordinare da un solo ristorante per volta.`);
             }
         },
 
