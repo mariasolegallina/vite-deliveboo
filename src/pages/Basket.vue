@@ -9,8 +9,16 @@ export default {
         return {
             store,
 
-            cart: JSON.parse(localStorage.getItem('cart')),
+            cart: JSON.parse(localStorage.getItem('cart')) || [],
         };
+    },
+
+    computed: {
+        totalPrice() {
+            return this.cart.reduce((total, item) => {
+                return total + (item.dish.price * item.quantity);
+            }, 0).toFixed(2); // Formatta il numero con due cifre decimali
+        }
     },
 
     methods: {
@@ -20,13 +28,35 @@ export default {
 
         addQuantity(item) {
             item.quantity++;
+            this.updateLocalStorage();
         },
 
         removeQuantity(item) {
             if(item.quantity > 1) {
                 item.quantity--
+                this.updateLocalStorage();
             }
-        }
+        },
+
+        
+        removeDish (item) {
+            this.cart = this.cart.filter(cartItem => cartItem !== item);
+            this.updateLocalStorage();        
+        },
+
+
+        removeAll() {
+            this.cart = [];
+            this.updateLocalStorage();
+
+        },
+
+        
+        
+        updateLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+        },
+
     }
 
 
@@ -39,28 +69,51 @@ export default {
 
 
         <div class="container">
-            <div class="basket">
+            <div class="basket mb-5 p-3">
             <h2>Il tuo carrello</h2>
 
                 
-            <div v-for="item in cart">
-                <div>
-                    {{ item.dish.name }}
+            <div v-for="item in cart" :key="item.dish.id">
+                <div class="mb-3">
+                    {{ item.dish.name }} x {{ item.quantity }}
 
-                    <span>x {{ item.quantity }}</span>
                 </div>
-                <div>
+                <div class="mb-3">
                     € {{ dishSumPrice(item)}}
                 </div>
 
-                <div>
-                    <button type="button" class="btn btn-outline-danger " @click="addQuantity(item)">+</button>
-                    
+
+
+                <div >
                     <button type="button" class="btn btn-outline-danger " @click="removeQuantity(item)">-</button>
+                    
+                    <span class="px-3">
+                        {{ item.quantity }}
+                    </span>
+                    
+                    <button type="button" class="btn btn-outline-danger " @click="addQuantity(item)">+</button>
+
+
+                    <button type="button" class="btn btn-outline-danger " @click="removeDish(item)">Rimuovi piatto</button>
+
+
+
+
+
                 </div>
             </div>
-    
-            </div>
+
+            <div>Totale: € {{ totalPrice }}</div>
+
+            
+        </div>
+
+            <button type="button" class="btn btn-outline-danger " @click="removeAll()">Svuota carrello</button>
+
+            <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
+                <i class="fa-solid fa-chevron-left"></i> Indietro
+            </router-link>
+
         </div>
 
     </section>
