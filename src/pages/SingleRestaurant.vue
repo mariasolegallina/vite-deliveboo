@@ -15,8 +15,6 @@ export default {
             restaurantId: '',
 
             store,
-
-            cartItems: [],
             
         }
     },
@@ -100,11 +98,6 @@ export default {
             <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
                 <i class="fa-solid fa-chevron-left"></i> Indietro
             </router-link>
-        </div>
-
-
-        <div v-for="item in cartItems">
-            {{ item.name }}
         </div>
     </section>
 </template>
