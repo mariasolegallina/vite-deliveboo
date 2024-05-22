@@ -16,19 +16,42 @@ export default {
 
             store,
 
-            count:1,
+            count: 1,
+
+            cartItems: [],
 
             
         }
     },
 
     methods: {
+        addToCart(items) {
+            if (!items || !items.length) {
+                console.error('Invalid items passed to addToCart.');
+                return;
+            }
 
-        addToCart(value) {
-            
-            localStorage.setItem('dish_name', value.name);
-            localStorage.setItem('dish_price', value.price);
-            localStorage.setItem('dish_qty', this.count);
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+            items.forEach(item => {
+                const existingItem = cartItems.find(cartItem => cartItem.name === item.name);
+                if (existingItem) {
+                existingItem.quantity += item.quantity;
+                } else {
+                cartItems.push(item);
+                }
+            });
+
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            this.$emit('cartUpdated');
+            },
+
+    },
+
+    created() {
+        const storedCart = JSON.parse(localStorage.getItem('cart'));
+        if (storedCart) {
+        this.cartItems = storedCart;
         }
     },
 
@@ -71,7 +94,7 @@ export default {
                         </div>
                         <!-- + - button -->
                         <div class="btn-group btn-group-sm" role="group" aria-label="Default button group">
-                            <button @click="addToCart(dish)" type="button" class="btn btn-primary">Aggiungi al carrello</button>
+                            <button @click="addToCart([dish])" type="button" class="btn btn-primary">Aggiungi al carrello</button>
                         </div>
                     </div>                
                 </li>
@@ -80,6 +103,11 @@ export default {
             <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
                 <i class="fa-solid fa-chevron-left"></i> Indietro
             </router-link>
+        </div>
+
+
+        <div v-for="item in cartItems">
+            {{ item.name }}
         </div>
     </section>
 </template>

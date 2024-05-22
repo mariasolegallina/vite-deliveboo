@@ -1,12 +1,13 @@
 <script>
+
+import { store } from '../store.js';
+
 export default {
     name: 'Basket',
 
     data() {
         return {
-            dish_name: localStorage.getItem("dish_name"),
-            dish_price: localStorage.getItem("dish_price"),
-            dish_qty: localStorage.getItem("dish_qty")
+            store
         };
     },
 
@@ -27,10 +28,7 @@ export default {
             <div class="basket">
             <h2>Il tuo carrello</h2>
             
-                nome: {{ dish_name }}
-                prezzo: {{ dish_price }}
-                quantità: {{ dish_qty }}
-            
+    
             </div>
         </div>
 
