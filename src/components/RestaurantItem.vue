@@ -11,25 +11,34 @@ export default {
 </script>
 
 <template>
+    <!-- link al singolo ristorante -->
     <router-link :to="{name: 'single-restaurant', params: {id: restaurant.id}}">
 
         <div class="rest-card hover">
+            <!-- immagine -->
             <img 
                 :src="'http://localhost:8000/storage/' + restaurant.image" 
                 :alt="'immagine ristorante ' + restaurant.restaurant_name"
             >
+
+            <!-- info ristorante -->
             <div class="rest-card__top">
                 <h2>{{ restaurant.restaurant_name }}</h2>
                 <p>{{ restaurant.address }}</p>
             </div>
+
             <div class="rest-card__type">
+                
+                <!-- tipologie -->
                 <span 
                 v-for="currentType in restaurant.types"
                 class="type"
                 >
                     {{ currentType.name }}
                 </span>
+
             </div>
+
         </div>
     </router-link>
 </template>
@@ -46,8 +55,6 @@ export default {
     height: 100%;
 
     @include box1;
-    
-    
 
     .rest-card__top {
 
@@ -58,7 +65,6 @@ export default {
         h2 {
             @include title2-semi;
         }
-
         p {
             font-size: $txt6;
         }
@@ -83,7 +89,6 @@ export default {
 
 }
 
-// test
 .hover:hover {
         border: 1px solid $primary1;
 } 

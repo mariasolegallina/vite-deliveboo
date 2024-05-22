@@ -9,18 +9,25 @@ export default {
     data(){
         return{
             store,
+
+            // tipologie selezionate 
             activeTypes: [],
         }
     },
 
     methods: {
        filterByTypes(type) {
+            // ricerco l'index della tipologia 
            const index = this.activeTypes.indexOf(type);
+           
            if (index > -1) {
-               this.activeTypes.splice(index, 1); // Rimuove il type se già presente
+                // Rimuove il type se già presente
+               this.activeTypes.splice(index, 1); 
            } else {
-               this.activeTypes.push(type); // Aggiunge il type se non presente
+                // Aggiunge il type se non presente
+               this.activeTypes.push(type); 
            }
+           
            this.$emit('filter', this.activeTypes);
        }
    },
@@ -29,6 +36,7 @@ export default {
 </script>
 
 <template>
+    <!-- lista delle tipologie -->
     <ul class="d-types">
         <li v-for="currentType in store.types" :key="currentType.name">
             <div class="type">

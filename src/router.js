@@ -9,16 +9,21 @@ const router = createRouter ({
 
     // rotte gestite 
     routes: [
+        // rotta lista ristoranti
         {
             path: '/',
             name: 'home',
             component: HomePage
         },
+
+        // rotta dettagli ristorante
         {
             path: '/ristorante/:id',
             name: 'single-restaurant',
             component: SingleRestaurant
         },
+
+        // rotta carrello
         {
             path: '/carrello',
             name: 'basket',

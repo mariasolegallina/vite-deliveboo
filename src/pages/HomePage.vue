@@ -18,33 +18,55 @@ export default {
     data() {
         return {
           store,
+
+          // array risotranti filtrati
           filteredRestaurants: [],
         }
     },
 
     methods: {
+
+      // gestione filtro 
       handleFilter(activeTypes) {
+
+        // se non sono stati selezionati filtri, aggiorna l'array 'filteredRestaurants' per visualizzare tutti i ristoranti
         if (activeTypes.length == 0 ) {
             this.filteredRestaurants = this.store.restaurants;  
+
         } else {
+
+          //  ottieni i ristoranti
           axios.get(this.store.baseApiUrl + '/restaurants').then(res => [
-            console.log(res),
             this.store.restaurants = res.data.results,
           ]),
+
+        // filtra i ristoranti ottenuti in base ai filtri attivi
           this.filteredRestaurants = this.store.restaurants.filter(restaurant => 
-          activeTypes.every(type => restaurant.types.map (t => t.name).includes(type))
+            activeTypes.every(type => restaurant.types.map (t => t.name).includes(type))
           );
+
         }
       }
+
+
     },
 
+
+    // chiamate axios
     mounted() {
         axios.get(this.store.baseApiUrl + '/restaurants').then(res => [
+
+        // tutti i ristoranti
           this.store.restaurants = res.data.results,
+        // aggiorna i ristoranti da filtrare 
           this.filteredRestaurants = res.data.results
         ]),
         
+        // ---------------------------------------------- //
+
         axios.get(this.store.baseApiUrl + '/types').then(res=>[
+
+        // tutte le tipologie 
           this.store.types = res.data.results,
         ])
     }
@@ -56,27 +78,34 @@ export default {
   <section>
       <div class="container">
 
-          <!-- sidebar -->
+        <!-- ---------------------------------------------- -->
+
           <div class="side-bar">
             <h2>Filtra</h2>
 
-            <!-- filters -->
+            <!-- filtri -->
             <AppFilter @filter="handleFilter"></AppFilter>
+
           </div>
 
-          <!-- main-content -->
+        <!-- ---------------------------------------------- -->
+
           <div class="main-content">
 
-            <!-- restaurants list -->
+            <!-- lista ristoranti -->
             <div class="rest-list gap-3">
+
               <RestaurantItem 
                 v-for="restaurant in filteredRestaurants"
                 :key="restaurant.id"
                 :restaurant="restaurant"
                 >
               </RestaurantItem>
-            </div>
+              
+            </div>        
           </div>
+
+          
       </div>
   </section>
 </template>

@@ -9,6 +9,7 @@ export default {
     },
 
     methods: {
+        // percorso per pagina login laravel
         redirectToLogin() {
             window.location.href = 'http://127.0.0.1:8000/admin';
         }
@@ -21,24 +22,30 @@ export default {
     <header>
         <section>
             <nav class="container">
+
+                <!-- link alla lista  -->
                 <router-link :to="{name: 'home'}">
                     <div class="logo">
-                    <img src="/img/deliveboo-logo.png" alt="">
-                </div>
+                        <img src="/img/deliveboo-logo.png" alt="">
+                    </div>
                 </router-link>
+
                 <div class="icons">
-                    <!-- link to login -->
+
+                    <!-- link al login -->
                     <div class="icon-container" @mouseover="hover = true" @mouseleave="hover = false">
                         <i class="fa-solid fa-user" @click="redirectToLogin()"></i>
                         <span v-show="hover" class="login-tooltip">Lavora con noi</span>
                     </div>
 
-                    <!-- link to basket -->
+                    <!-- link al carrello -->
                     <router-link :to="{name: 'basket'}"  class="icon-container"@mouseover="hover = true" @mouseleave="hover = false">
                         <i class="fa-solid fa-basket-shopping"></i>
                         <span v-show="hover" class="login-tooltip">Vai al carrello</span>
                     </router-link>
+                
                 </div>
+            
             </nav>
         </section>
     </header>
@@ -51,7 +58,6 @@ export default {
 header {
     background-color: $light;
     filter: drop-shadow(0 0 0.2rem $grey2);
-
 }
 
 ;
@@ -61,11 +67,8 @@ nav {
     justify-content: space-between;
     align-items: center;
 
-
     .logo {
-
         max-width: 10rem;
-
     }
 
     .icons {
