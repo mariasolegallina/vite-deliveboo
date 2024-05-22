@@ -95,6 +95,7 @@ export default {
     <section>
         <div class="container">
             <h3 class='rest_title'>{{ restaurant.restaurant_name }}</h3>
+            <p>{{ restaurant.address }}</p>
             <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
             <ul class="list-group mb-5">
                 <li 

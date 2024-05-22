@@ -64,20 +64,30 @@ export default {
 <section>
     <div class="container">
 
-        <h2>Il tuo carrello</h2>
+        <h2 class="mb-4">Il tuo ordine</h2>
 
         <div v-if="cart.length > 0" class="basket mb-5 p-3">
-            <h3>{{ cart[0].restaurantInfo.restaurant_name }}</h3>
 
-            <div class="basket mb-5 p-3">
+            <div class="mb-4">
+                <h3>{{ cart[0].restaurantInfo.restaurant_name }}</h3>
+    
+                <p>{{ cart[0].restaurantInfo.address }}</p>
+            </div>
 
-                <div v-for="item in cart" :key="item.dish.id" class="mb-3">
+            <div class="mb-5">
 
-                    <h6 class="mb-3">
-                        {{ item.dish.name }} x {{ item.quantity }}
-                    </h6>
-                    <div class="mb-3">
-                        € {{ dishSumPrice(item) }}
+                <div v-for="item in cart" :key="item.dish.id" class="mb-4">
+
+
+                    <div class="d-flex gap-3 align-items-center justify-content-between">
+
+                        <div class="mb-3 fw-semibold">
+                            {{ item.dish.name }} x {{ item.quantity }}
+                        </div>
+                        <div class="mb-3">
+                            € {{ dishSumPrice(item) }}
+                        </div>
+
                     </div>
 
                     <div class="mb-4">
@@ -92,19 +102,40 @@ export default {
 
                     </div>
 
+                    <hr>
+
+
                 </div>
-                <div class="d-flex justify-content-end ">
-                    <button type="button" class="btn btn-outline-danger ms-3" @click="removeAll()">Svuota carrello</button>
+
+                <div class="text-end fs-4">
+                    <span>Totale:</span> <span class="fw-bold"> € {{ totalPrice }}</span>
                 </div>
-                    
+
+                
             </div>
-            <div class="text-end ">
-                Totale: € {{ totalPrice }}
+            <!-- modal trigger -->
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Svuota carrello</button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            Sei sicuro di voler svuotare il carrello? tutti i dati inseriti andranno persi
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="removeAll()">Svuota carrello</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div v-else class="my-5 text-center ">
-            Il tuo carrello è vuoto attualmente. <br>
-            Torna indietro per vedere i nostri ristoranti
+            Il tuo carrello è vuoto. <br>
+            Torna indietro per vedere i nostri ristoranti.
         </div>
         <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
             <i class="fa-solid fa-chevron-left"></i> Indietro
@@ -136,8 +167,4 @@ export default {
     margin-bottom: 5px;
 }
 
-.basket p {
-    margin-top: 10px;
-    font-weight: bold;
-}
 </style>
