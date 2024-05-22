@@ -13,51 +13,62 @@ export default {
         return {
             restaurant: [],
             restaurantId: '',
+            errorMessage: '',
+            cart: [],
 
             store,
+
             
         }
     },
 
+    created() {
+    this.loadCart();
+},
+
     methods: {
-      
 
-        addToCart(dish, quantity) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            let restaurantId = localStorage.getItem('restaurantId');
 
-            if (cart.length === 0 || cart[0].restaurantId === restaurantId) {
-                let existingItem = cart.find(p => p.dish.id === dish.id);
-                if (existingItem) {
-                    existingItem.quantity += quantity;
-                } else {
-                    cart.push({ dish, quantity, restaurantId });
-                }
-                localStorage.setItem('cart', JSON.stringify(cart));
-            } else {
-                alert(`Puoi ordinare da un solo ristorante per volta.`);
-            }
-        },
-
-        removeFromCart(dish, quantity) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            if (cart.length > 0) {
-                let existingItem = cart.find(item => item.dish.id === dish.id);
-                if (existingItem && existingItem.quantity > 1) {
-                    existingItem.quantity -= quantity;
-                } else {
-                    cart = cart.filter(item => item.dish.id !== dish.id);
-                }
-                localStorage.setItem('cart', JSON.stringify(cart));
-            }
+        loadCart() {
+        const storedCart = JSON.parse(localStorage.getItem('cart'));
+        if (storedCart) {
+            this.cart = storedCart;
         }
     },
 
-    created() {
-        const storedCart = JSON.parse(localStorage.getItem('cart'));
-        if (storedCart) {
-            this.cartItems = storedCart;
+
+    addToCart(dish) {
+        let restaurantId = localStorage.getItem('restaurantId');
+        let existingItem = this.cart.find(p => p.dish.id === dish.id);
+        let restaurantInfo = this.restaurant;
+
+        if (this.cart.length === 0 || this.cart[0].restaurantId === restaurantId) {
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                this.cart.push({ dish, quantity: 1, restaurantId, restaurantInfo });
+            }
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+        } else {
+            this.errorMessage = 'Puoi ordinare da un solo ristorante per volta.';
         }
+    },
+    removeFromCart(dish) {
+        let item = this.cart.find(item => item.dish.id === dish.id);
+        if (item && item.quantity > 1) {
+            item.quantity -= 1;
+        } else {
+            this.cart = this.cart.filter(item => item.dish.id !== dish.id);
+        }
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+    },
+
+
+
+        getQuantity(dish) {
+        let item = this.cart.find(item => item.dish.id === dish.id);
+        return item ? item.quantity : 0;
+    }
     },
 
 
@@ -84,6 +95,7 @@ export default {
     <section>
         <div class="container">
             <h3 class='rest_title'>{{ restaurant.restaurant_name }}</h3>
+            <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
             <ul class="list-group">
                 <li 
                     v-for="dish in restaurant.dishes"
@@ -102,9 +114,11 @@ export default {
                         
                         
                         <div>
-                            <button type="button" class="btn btn-outline-danger " @click="addToCart(dish, 1)">+</button>
-                            
                             <button type="button" class="btn btn-outline-danger " @click="removeFromCart(dish, 1)">-</button>
+                            
+                            <span class="px-3">{{ getQuantity(dish) }}</span>
+                            
+                            <button type="button" class="btn btn-outline-danger " @click="addToCart(dish, 1)">+</button>
                         </div>
                     </div>                
                 </li>
