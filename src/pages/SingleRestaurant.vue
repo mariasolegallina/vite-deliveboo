@@ -94,8 +94,17 @@ export default {
 <template>
     <section>
         <div class="container">
-            <h3 class='rest_title'>{{ restaurant.restaurant_name }}</h3>
-            <p>{{ restaurant.address }}</p>
+
+            <div class="page-top">
+                <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </router-link>
+                <div class="page-title">
+                    <h2 class="title">{{ restaurant.restaurant_name }}</h2>
+                    <p>{{ restaurant.address }}</p>
+                    <p><i class="fa-solid fa-phone"></i> {{ restaurant.phone-number }}</p>
+                </div>
+            </div>
 
             <!-- wrong restaurant error message -->
             <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
@@ -129,9 +138,6 @@ export default {
                 </li>
             </ul>
 
-            <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
-                <i class="fa-solid fa-chevron-left"></i> Indietro
-            </router-link>
         </div>
     </section>
 </template>
@@ -140,10 +146,33 @@ export default {
 @use "../style/partials/variables" as *;
 @use "../style/partials/mixins" as *;
 
-.rest_title {
-@include title-semi;
-margin-bottom: 20px;
+.page-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    
+    .page-title {
+        @include box1;
+        padding: 10px 16px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+
+        background-color: $grey1;
+
+        .title {
+            @include title2-semi;
+        }
+        p {
+            font-size: $txt5;
+            margin: 0;
+        }
+    }
 }
+
+.page-top .btn:hover i {
+        color: $light;
+    }
 
 ul {
     padding: 0;
