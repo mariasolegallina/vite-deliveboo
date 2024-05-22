@@ -20,27 +20,37 @@ export default {
     },
 
     methods: {
-        addToCart(items) {
-            if (!items || !items.length) {
-                console.error('Invalid items passed to addToCart.');
-                return;
-            }
+      
 
-            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        addToCart(dish, quantity) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let restaurantId = localStorage.getItem('restaurantId');
 
-            items.forEach(item => {
-                const existingItem = cartItems.find(cartItem => cartItem.name === item.name);
+            if (cart.length === 0 || cart[0].restaurantId === restaurantId) {
+                let existingItem = cart.find(p => p.dish.id === dish.id);
                 if (existingItem) {
-                    existingItem.quantity += item.quantity;
+                    existingItem.quantity += quantity;
                 } else {
-                    cartItems.push(item);
+                    cart.push({ dish, quantity, restaurantId });
                 }
-            });
+                localStorage.setItem('cart', JSON.stringify(cart));
+            } else {
+                alert("Puoi aggiungere piatti solo dallo stesso ristorante.Trmon.");
+            }
+        },
 
-            localStorage.setItem('cart', JSON.stringify(cartItems));
-                this.$emit('cartUpdated');
-            },
-
+        removeFromCart(dish, quantity) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length > 0) {
+                let existingItem = cart.find(item => item.dish.id === dish.id);
+                if (existingItem && existingItem.quantity > 1) {
+                    existingItem.quantity -= quantity;
+                } else {
+                    cart = cart.filter(item => item.dish.id !== dish.id);
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
+        }
     },
 
     created() {
@@ -58,6 +68,8 @@ export default {
         console.log(this.restaurantId);
 
         this.restaurantId = this.$route.params.id;
+
+        localStorage.setItem('restaurantId', this.restaurantId); 
 
         axios.get(this.store.baseApiUrl + '/restaurants/' + this.restaurantId).then(res => {
             this.restaurant = res.data.restaurant
@@ -87,9 +99,12 @@ export default {
                                 <span>€ {{ dish.price }}</span>
                             </div>
                         </div>
-                        <!-- + - button -->
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Default button group">
-                            <button @click="addToCart([dish])" type="button" class="btn btn-primary">Aggiungi al carrello</button>
+                        
+                        
+                        <div>
+                            <button type="button" class="btn btn-outline-danger " @click="addToCart(dish, 1)">+</button>
+                            
+                            <button type="button" class="btn btn-outline-danger " @click="removeFromCart(dish, 1)">-</button>
                         </div>
                     </div>                
                 </li>
