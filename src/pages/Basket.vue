@@ -1,6 +1,5 @@
 <script>
 
-import { store } from '../store.js';
 import { eventBus } from '../eventBus.js';
 
 export default {
@@ -8,8 +7,6 @@ export default {
 
     data() {
         return {
-            store,
-
             // recupero il cart dal local storage
             cart: JSON.parse(localStorage.getItem('cart')) || [],
         };
