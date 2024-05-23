@@ -28,8 +28,6 @@ export default {
             // carrello 
             cart: [],
 
-            showAddToggle: false,
-            showRemoveToggle: false,
         }
     },
 
@@ -75,11 +73,6 @@ export default {
                 this.errorMessage = 'Puoi ordinare da un solo ristorante per volta.';
             }
 
-            // Mostra il toggle
-            this.showAddToggle = true;
-
-            // Nasconde il toggle 
-            setTimeout(() => this.showAddToggle = false, 2000);
 
             localStorage.setItem('cart', JSON.stringify(this.cart));
             const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -103,12 +96,6 @@ export default {
 
             // aggiorna il local storage
             localStorage.setItem('cart', JSON.stringify(this.cart));
-
-            // Mostra il toggle
-            this.showRemoveToggle = true;
-
-            // Nasconde il toggle
-            setTimeout(() => this.showRemoveToggle = false, 2000);
 
             localStorage.setItem('cart', JSON.stringify(this.cart));
             const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -147,10 +134,6 @@ export default {
 <template>
     <section>
         <div class="container">
-
-            <!-- Toggle per aggiunta/rimozione dal carrello -->
-            <div v-if="showAddToggle" class="alert alert-success">Aggiunto al carrello.</div>
-            <div v-if="showRemoveToggle" class="alert alert-danger">Rimosso dal carrello.</div>
 
             <div class="page-top">
                 <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
