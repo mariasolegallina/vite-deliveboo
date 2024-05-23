@@ -126,10 +126,11 @@ export default {
                 </div>
 
                 <!-- dati ristorante -->
-                <div class="restaurant">
+                <div class="restaurant d-flex flex-column gap-2 ">
                     <h2 class="rest-name">{{ cart[0].restaurantInfo.restaurant_name }}</h2>
-                    <p>{{ cart[0].restaurantInfo.address }}</p>
-                    <!-- <p><i class="fa-solid fa-phone"></i> {{ cart[0].restaurantInfo.phone-number }}</p> -->
+                    <p><i class="fa-solid me-2 fa-location-dot"></i> {{ cart[0].restaurantInfo.address }}</p>
+                    <p><i class="fa-solid me-2 fa-phone"></i> +39 {{ cart[0].userInfo.phone_number }}</p>
+                    <p><i class="fa-solid me-2 fa-envelope"></i> {{ cart[0].userInfo.email }}</p>
                 </div>
             </div>
 
