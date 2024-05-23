@@ -16,14 +16,17 @@ export default {
 
             // dati singolo ristorante 
             restaurant: [],
-            
+
             restaurantId: '',
-            
+
             // messaggio di errore da mostrare
             errorMessage: '',
-            
+
             // carrello 
             cart: [],
+
+            showAddToggle: false,
+            showRemoveToggle: false,
         }
     },
 
@@ -43,20 +46,20 @@ export default {
 
         // aggiunta piatto al local storage
         addToCart(dish) {
-        
+
             let restaurantId = localStorage.getItem('restaurantId');
             let existingItem = this.cart.find(p => p.dish.id === dish.id);
             let restaurantInfo = this.restaurant;
 
-            
+
             // controllo che il carrello sia vuoto o l'id del ristorante del primo piatto inserito corrisponda ai successivi 
             if (this.cart.length === 0 || this.cart[0].restaurantId === restaurantId) {
-                
+
                 // se il piatto è già presente incrementa la quantità
                 if (existingItem) {
                     existingItem.quantity += 1;
                 } else {
-                // altrimenti inserisci il piatto nel carrello con 'quantity = 1'
+                    // altrimenti inserisci il piatto nel carrello con 'quantity = 1'
                     this.cart.push({ dish, quantity: 1, restaurantId, restaurantInfo });
                 }
 
@@ -66,8 +69,13 @@ export default {
 
                 // se l'id del ristorante non corrisponde al primo piatto nel carrello 
                 this.errorMessage = 'Puoi ordinare da un solo ristorante per volta.';
-            
             }
+
+            // Mostra il toggle
+            this.showAddToggle = true;
+
+            // Nasconde il toggle 
+            setTimeout(() => this.showAddToggle = false, 2000);
         },
 
 
@@ -80,12 +88,18 @@ export default {
             if (item && item.quantity > 1) {
                 item.quantity -= 1;
             } else {
-            // rimuovi il piatto dal carrello
+                // rimuovi il piatto dal carrello
                 this.cart = this.cart.filter(item => item.dish.id !== dish.id);
             }
 
             // aggiorna il local storage
             localStorage.setItem('cart', JSON.stringify(this.cart));
+
+            // Mostra il toggle
+            this.showRemoveToggle = true;
+
+            // Nasconde il toggle
+            setTimeout(() => this.showRemoveToggle = false, 2000);
         },
 
         // ritorna la quantità di ogni piatto nel carrello
@@ -97,12 +111,12 @@ export default {
 
 
     // ---------------------------------------------- //
-    
+
 
     // ottenere l'id del ristorante selezionato
     mounted() {
         this.restaurantId = this.$route.params.id;
-        localStorage.setItem('restaurantId', this.restaurantId); 
+        localStorage.setItem('restaurantId', this.restaurantId);
 
         axios.get(this.store.baseApiUrl + '/restaurants/' + this.restaurantId).then(res => {
             this.restaurant = res.data.restaurant
@@ -117,8 +131,12 @@ export default {
     <section>
         <div class="container">
 
+            <!-- Toggle per aggiunta/rimozione dal carrello -->
+            <div v-if="showAddToggle" class="alert alert-success">Aggiunto al carrello.</div>
+            <div v-if="showRemoveToggle" class="alert alert-danger">Rimosso dal carrello.</div>
+
             <div class="page-top">
-                <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
+                <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
                     <i class="fa-solid fa-chevron-left"></i>
                 </router-link>
                 <div class="page-title">
@@ -131,13 +149,12 @@ export default {
             <!-- wrong restaurant error message -->
             <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
+
+
+
             <!-- dishes list -->
             <ul>
-                <li
-                    v-for="dish in restaurant.dishes"
-                    v-show="dish.viewable"
-                    class="list-group-item"
-                >
+                <li v-for="dish in restaurant.dishes" v-show="dish.viewable" class="list-group-item">
                     <div class="dish-card">
                         <div v-if="dish.image" class="dish-card_img">
                             <img :src="'http://localhost:8000/storage/' + dish.image" alt="">
@@ -151,12 +168,12 @@ export default {
 
                             <!-- add to cart -->
                             <div class="add-to-cart">
-                                <button type="button" class="btn-left" @click="removeFromCart(dish, 1)">-</button>                               
-                                <span class="number">{{ getQuantity(dish) }}</span>                               
+                                <button type="button" class="btn-left" @click="removeFromCart(dish, 1)">-</button>
+                                <span class="number">{{ getQuantity(dish) }}</span>
                                 <button type="button" class="btn-right" @click="addToCart(dish, 1)">+</button>
                             </div>
                         </div>
-                    </div>   
+                    </div>
                 </li>
             </ul>
 
@@ -172,7 +189,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    
+
     .page-title {
         @include box1;
         padding: 10px 16px;
@@ -185,6 +202,7 @@ export default {
         .title {
             @include title2-semi;
         }
+
         p {
             font-size: $txt5;
             margin: 0;
@@ -193,8 +211,8 @@ export default {
 }
 
 .page-top .btn:hover i {
-        color: $light;
-    }
+    color: $light;
+}
 
 ul {
     padding: 0;
@@ -251,44 +269,44 @@ ul {
         }
 
         button {
-        background-color: white;
-        border: 1px solid $primary1;
-        padding: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        outline: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+            background-color: white;
+            border: 1px solid $primary1;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        &:hover {
-            background-color: $primary1;
-            color: white;
-        }
+            &:hover {
+                background-color: $primary1;
+                color: white;
+            }
 
-        &:first-of-type {
-            // border-right: none;
-            border-top-left-radius: 0.375rem;
-            border-bottom-left-radius: 0.375rem;
-        }
+            &:first-of-type {
+                // border-right: none;
+                border-top-left-radius: 0.375rem;
+                border-bottom-left-radius: 0.375rem;
+            }
 
-        &:last-of-type {
-            // border-left: none;
-            border-top-right-radius: 0.375rem;
-            border-bottom-right-radius: 0.375rem;
-        }
+            &:last-of-type {
+                // border-left: none;
+                border-top-right-radius: 0.375rem;
+                border-bottom-right-radius: 0.375rem;
+            }
         }
 
 
         .number {
-        padding: 10px;
-        border: 1px solid $primary1;
-        border-left: none;
-        border-right: none;
-        min-width: 40px; /* Assicura che l'elemento non si deformi */
-        text-align: center;
+            padding: 10px;
+            border: 1px solid $primary1;
+            border-left: none;
+            border-right: none;
+            min-width: 40px;
+            /* Assicura che l'elemento non si deformi */
+            text-align: center;
         }
     }
 }
-
 </style>
