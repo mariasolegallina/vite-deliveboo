@@ -17,6 +17,8 @@ export default {
 
             // dati singolo ristorante 
             restaurant: [],
+            // dati ristoratore
+            user: [],
 
             restaurantId: '',
 
@@ -51,6 +53,7 @@ export default {
             let restaurantId = localStorage.getItem('restaurantId');
             let existingItem = this.cart.find(p => p.dish.id === dish.id);
             let restaurantInfo = this.restaurant;
+            let userInfo = this.user;
 
 
             // controllo che il carrello sia vuoto o l'id del ristorante del primo piatto inserito corrisponda ai successivi 
@@ -61,7 +64,7 @@ export default {
                     existingItem.quantity += 1;
                 } else {
                     // altrimenti inserisci il piatto nel carrello con 'quantity = 1'
-                    this.cart.push({ dish, quantity: 1, restaurantId, restaurantInfo });
+                    this.cart.push({ dish, quantity: 1, restaurantId, restaurantInfo, userInfo });
                 }
 
                 // salvo il carrello aggiornato
@@ -133,6 +136,7 @@ export default {
 
         axios.get(this.store.baseApiUrl + '/restaurants/' + this.restaurantId).then(res => {
             this.restaurant = res.data.restaurant
+            this.user = res.data.restaurant.user
         })
     }
 
@@ -152,10 +156,11 @@ export default {
                 <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
                     <i class="fa-solid fa-chevron-left"></i>
                 </router-link>
-                <div class="page-title">
+                <div class="page-title d-flex flex-column gap-2 ">
                     <h2 class="title">{{ restaurant.restaurant_name }}</h2>
-                    <p>{{ restaurant.address }}</p>
-                    <!-- <p><i class="fa-solid fa-phone"></i> {{ restaurant.phone-number }}</p> -->
+                    <p><i class="fa-solid me-2 fa-location-dot"></i> {{ restaurant.address }}</p>
+                    <p><i class="fa-solid me-2 fa-phone"></i>+39  {{ user.phone_number }}</p>
+                    <p><i class="fa-solid me-2 fa-envelope"></i> {{ user.email }}</p>
                 </div>
             </div>
 
