@@ -83,9 +83,10 @@ nav {
 
         cursor: pointer;
 
-        :hover {
-            color: #ef4860;
-        }
+    }
+    
+    .fa-solid:hover {    
+        color: #ef4860;
     }
 
     .icon-container {
