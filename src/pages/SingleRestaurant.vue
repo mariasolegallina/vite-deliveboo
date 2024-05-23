@@ -124,7 +124,7 @@ export default {
                 <div class="page-title">
                     <h2 class="title">{{ restaurant.restaurant_name }}</h2>
                     <p>{{ restaurant.address }}</p>
-                    <p><i class="fa-solid fa-phone"></i> {{ restaurant.phone-number }}</p>
+                    <!-- <p><i class="fa-solid fa-phone"></i> {{ restaurant.phone-number }}</p> -->
                 </div>
             </div>
 

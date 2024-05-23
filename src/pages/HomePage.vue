@@ -94,9 +94,10 @@ export default {
           <div class="main-content">
 
             <!-- lista ristoranti -->
-            <div class="rest-list gap-3">
+            <div class="rest-list gap-3" v-if="filteredRestaurants.length > 0">
 
-              <RestaurantItem 
+        
+                <RestaurantItem 
                 v-for="restaurant in filteredRestaurants"
                 :key="restaurant.id"
                 :restaurant="restaurant"
@@ -104,6 +105,19 @@ export default {
               </RestaurantItem>
               
             </div>        
+
+            <!-- se non vengono trovati ristoranti con i filtri -->
+            <div v-else class="text-center">
+              
+              <h6>
+                Non sono stati trovati risultati per questa ricerca
+              </h6>
+              <div>
+                Aggiorna i filtri e riprova
+              </div>
+
+            </div>
+          
           </div>
 
           

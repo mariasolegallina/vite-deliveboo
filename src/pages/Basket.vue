@@ -129,34 +129,38 @@ export default {
                 <div class="restaurant">
                     <h2 class="rest-name">{{ cart[0].restaurantInfo.restaurant_name }}</h2>
                     <p>{{ cart[0].restaurantInfo.address }}</p>
-                    <p><i class="fa-solid fa-phone"></i> {{ cart[0].restaurantInfo.phone-number }}</p>
+                    <!-- <p><i class="fa-solid fa-phone"></i> {{ cart[0].restaurantInfo.phone-number }}</p> -->
                 </div>
             </div>
 
             <!-- dettagli ordine -->
-            <div
-            v-for="item in cart"
-            :key="item.dish.id"
-            class="order"
-            >                
-                <!-- dati articoli -->
-                <div class="order__dishes">
-                    <div class="dish-name">{{ item.dish.name }} x {{ item.quantity }}</div>
-                    <div class="dish-price">€ {{ dishSumPrice(item) }}</div>
-                </div>
+            <div class="order-wrap flex-grow-1 ">
 
-                <div class="buttons">
-                    <!-- modifica quantità -->
-                    <div class="mod-quantity">
-                        <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>                               
-                        <span class="number">{{ item.quantity }}</span>                               
-                        <button type="button" class="btn-right" @click="removeDish(item)">+</button>
+                <div
+                v-for="item in cart"
+                :key="item.dish.id"
+                class="order mb-3 "
+                >                
+                    <!-- dati articoli -->
+                    <div class="order__dishes">
+                        <div class="dish-name">{{ item.dish.name }} x {{ item.quantity }}</div>
+                        <div class="dish-price">€ {{ dishSumPrice(item) }}</div>
                     </div>
 
-                    <!-- rimozione tutti gli articoli di quel tipo -->
-                    <button type="button" class="btn btn-outline-danger btn-delete" @click="removeDish(item)"><i class="fa-solid fa-trash"></i></button>
-                </div> 
-            </div>                        
+                    <div class="buttons">
+                        <!-- modifica quantità -->
+                        <div class="mod-quantity">
+                            <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>                               
+                            <span class="number">{{ item.quantity }}</span>                               
+                            <button type="button" class="btn-right" @click="addQuantity(item)">+</button>
+                        </div>
+
+                        <!-- rimozione tutti gli articoli di quel tipo -->
+                        <button type="button" class="btn btn-outline-danger btn-delete" @click="removeDish(item)"><i class="fa-solid fa-trash"></i></button>
+                    </div> 
+                </div>  
+            </div>
+
         </div>
 
         <!-- se nessun articolo risulta presente nel carrello -->
