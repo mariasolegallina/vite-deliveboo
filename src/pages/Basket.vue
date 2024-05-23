@@ -2,6 +2,8 @@
 
 import { eventBus } from '../eventBus.js';
 
+import OrderForm from '../components/OrderForm.vue'
+
 export default {
     name: 'Basket',
 
@@ -10,6 +12,10 @@ export default {
             // recupero il cart dal local storage
             cart: JSON.parse(localStorage.getItem('cart')) || [],
         };
+    },
+
+    components: {
+        OrderForm,
     },
 
     computed: {
@@ -168,6 +174,14 @@ export default {
                                     class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
+
+
+
+
+                    <!-- TEST -->
+                    <OrderForm></OrderForm>
+
+
                 </div>
 
             </div>

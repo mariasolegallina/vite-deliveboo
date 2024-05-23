@@ -28,7 +28,7 @@ const router = createRouter ({
             path: '/carrello',
             name: 'basket',
             component: Basket
-        }
+        },
     ]
 });
 
