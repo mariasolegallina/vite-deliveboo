@@ -1,6 +1,7 @@
 <script>
 
 import { store } from '../store.js';
+import { eventBus } from '../eventBus.js';
 
 export default {
     name: 'Basket',
@@ -36,6 +37,7 @@ export default {
         addQuantity(item) {
             item.quantity++;
             this.updateLocalStorage();
+            this.emitCartUpdate();
         },
         // se il piatto risulta presente lo rimuovo o diminuisco la quantità
         removeQuantity(item) {
@@ -44,6 +46,8 @@ export default {
 
                 // aggiorno lo storage
                 this.updateLocalStorage();
+
+                this.emitCartUpdate();
             }
         },
 
@@ -54,6 +58,8 @@ export default {
 
             // aggiorno lo storage
             this.updateLocalStorage();
+
+            this.emitCartUpdate();
         },
 
         // rimozione di tutti i piatti dal carrello
@@ -62,6 +68,8 @@ export default {
             this.cart = [];
             // aggiorno lo storage
             this.updateLocalStorage();
+            this.emitCartUpdate();
+
         },
 
         // ---------------------------------------------- //
@@ -71,106 +79,109 @@ export default {
             localStorage.setItem('cart', JSON.stringify(this.cart));
         },
 
+        emitCartUpdate() {
+            const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemCount = updatedCart.reduce((acc, item) => acc + item.quantity, 0);
+            eventBus.emit('updateCart', itemCount);
+        }
     },
 
 }
 </script>
 
 <template>
-<section>
-    <div class="container">
+    <section>
+        <div class="container">
 
-        <!-- titolo e bottone home -->
-        <div class="page-top">
-            <router-link class="btn btn-outline-dark " :to="{name: 'home'}">
-                <i class="fa-solid fa-chevron-left"></i>
-            </router-link>
-            <h2 class="title">Il mio ordine</h2>
-        </div>
-        
-        <!-- se il carrello contiene degli articoli li mostro -->
-        <div
-        v-if="cart.length > 0"
-        class="my-order"
-        >
+            <!-- titolo e bottone home -->
+            <div class="page-top">
+                <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </router-link>
+                <h2 class="title">Il mio ordine</h2>
+            </div>
 
-            <div class="sidebar-r col-3">
-                <!-- totale carrello -->
-                <div class="text-end fs-4">
-                    <span>Totale:</span> <span class="fw-bold"> € {{ totalPrice }}</span>
+            <!-- se il carrello contiene degli articoli li mostro -->
+            <div v-if="cart.length > 0" class="my-order">
+
+                <div class="sidebar-r col-3">
+                    <!-- totale carrello -->
+                    <div class="text-end fs-4">
+                        <span>Totale:</span> <span class="fw-bold"> € {{ totalPrice }}</span>
+                    </div>
+
+                    <!-- rimozione di tutti gli articoli dal carrello -->
+                    <button type="button" class="btn btn-success">Concludi l'ordine</button>
+
+                    <!-- rimozione di tutti gli articoli dal carrello -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal">Svuota il carrello</button>
+
+                    <!-- Modal per la rimozione -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+                                    Vuoi davvero svuotare il carrello? Tutti i dati inseriti andranno persi
+                                </div>
+
+                                <div class="modal-footer">
+                                    <!-- annulla azione -->
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Annulla</button>
+                                    <!-- conferma azione -->
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                        @click="removeAll()">Prosegui</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- dati ristorante -->
+                    <div class="restaurant">
+                        <h2 class="rest-name">{{ cart[0].restaurantInfo.restaurant_name }}</h2>
+                        <p>{{ cart[0].restaurantInfo.address }}</p>
+                        <!-- <p><i class="fa-solid fa-phone"></i> {{ cart[0].restaurantInfo.phone-number }}</p> -->
+                    </div>
                 </div>
 
-                <!-- rimozione di tutti gli articoli dal carrello -->
-                <button type="button" class="btn btn-success">Concludi l'ordine</button>
+                <!-- dettagli ordine -->
+                <div class="order-wrap flex-grow-1 ">
 
-                <!-- rimozione di tutti gli articoli dal carrello -->
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
+                    <div v-for="item in cart" :key="item.dish.id" class="order mb-3 ">
+                        <!-- dati articoli -->
+                        <div class="order__dishes">
+                            <div class="dish-name">{{ item.dish.name }} x {{ item.quantity }}</div>
+                            <div class="dish-price">€ {{ dishSumPrice(item) }}</div>
+                        </div>
 
-                <!-- Modal per la rimozione -->
-                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-body">
-                                Vuoi davvero svuotare il carrello? Tutti i dati inseriti andranno persi
+                        <div class="buttons">
+                            <!-- modifica quantità -->
+                            <div class="mod-quantity">
+                                <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>
+                                <span class="number">{{ item.quantity }}</span>
+                                <button type="button" class="btn-right" @click="addQuantity(item)">+</button>
                             </div>
 
-                            <div class="modal-footer">
-                                <!-- annulla azione -->
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                <!-- conferma azione -->
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="removeAll()">Prosegui</button>
-                            </div>
+                            <!-- rimozione tutti gli articoli di quel tipo -->
+                            <button type="button" class="btn btn-outline-danger btn-delete" @click="removeDish(item)"><i
+                                    class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <!-- dati ristorante -->
-                <div class="restaurant">
-                    <h2 class="rest-name">{{ cart[0].restaurantInfo.restaurant_name }}</h2>
-                    <p>{{ cart[0].restaurantInfo.address }}</p>
-                    <!-- <p><i class="fa-solid fa-phone"></i> {{ cart[0].restaurantInfo.phone-number }}</p> -->
-                </div>
             </div>
 
-            <!-- dettagli ordine -->
-            <div class="order-wrap flex-grow-1 ">
-
-                <div
-                v-for="item in cart"
-                :key="item.dish.id"
-                class="order mb-3 "
-                >                
-                    <!-- dati articoli -->
-                    <div class="order__dishes">
-                        <div class="dish-name">{{ item.dish.name }} x {{ item.quantity }}</div>
-                        <div class="dish-price">€ {{ dishSumPrice(item) }}</div>
-                    </div>
-
-                    <div class="buttons">
-                        <!-- modifica quantità -->
-                        <div class="mod-quantity">
-                            <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>                               
-                            <span class="number">{{ item.quantity }}</span>                               
-                            <button type="button" class="btn-right" @click="addQuantity(item)">+</button>
-                        </div>
-
-                        <!-- rimozione tutti gli articoli di quel tipo -->
-                        <button type="button" class="btn btn-outline-danger btn-delete" @click="removeDish(item)"><i class="fa-solid fa-trash"></i></button>
-                    </div> 
-                </div>  
+            <!-- se nessun articolo risulta presente nel carrello -->
+            <div v-else class="my-5 text-center ">
+                Il tuo carrello è vuoto. <br>
+                Torna indietro per vedere i nostri ristoranti.
             </div>
 
         </div>
-
-        <!-- se nessun articolo risulta presente nel carrello -->
-        <div v-else class="my-5 text-center ">
-            Il tuo carrello è vuoto. <br>
-            Torna indietro per vedere i nostri ristoranti.
-        </div>
-
-    </div>
-</section>
+    </section>
 
 </template>
 
@@ -192,8 +203,8 @@ export default {
 }
 
 .page-top .btn:hover i {
-        color: $light;
-    }
+    color: $light;
+}
 
 .my-order {
 
@@ -220,6 +231,7 @@ export default {
         .rest-name {
             @include title2-semi;
         }
+
         p {
             font-size: $txt5;
             margin: 0;
@@ -251,8 +263,8 @@ export default {
 
 .buttons {
     .mod-quantity {
-    display: flex;
-    align-items: center;
+        display: flex;
+        align-items: center;
     }
 
     button {
@@ -298,5 +310,4 @@ export default {
         color: $light;
     }
 }
-
 </style>

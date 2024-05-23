@@ -1,11 +1,27 @@
 <script>
+import { eventBus } from '../eventBus.js';
 export default {
 
     name: 'PageHeader',
+    setup() {
+        const cartState = eventBus.getState();
+
+        return {
+            cartState
+        };
+    },
+
     data() {
         return {
-            hover: false
+            hover: false,
+            // cartItemCount: 0
         };
+    },
+
+    created() {
+        eventBus.on('updateCart', (newCount) => {
+            this.cartItemCount = newCount;
+        });
     },
 
     methods: {
@@ -22,17 +38,19 @@ export default {
         <nav class="container">
 
             <!-- link alla lista -->
-            <router-link :to="{name: 'home'}">
+            <router-link :to="{ name: 'home' }">
                 <div class="logo">
-                <img src="/img/deliveboo-logo.png" alt="">
-            </div>
+                    <img src="/img/deliveboo-logo.png" alt="">
+                </div>
             </router-link>
             <div class="icons">
 
                 <!-- link al carrello -->
-                <router-link :to="{name: 'basket'}"  class="icon-container"@mouseover="hover = true" @mouseleave="hover = false">
+                <router-link :to="{ name: 'basket' }" class="icon-container" @mouseover="hover = true"
+                    @mouseleave="hover = false">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span v-show="hover" class="login-tooltip">Vai al carrello</span>
+                    <span class="cart-count">{{ cartState.cartCount }}</span>
                 </router-link>
 
                 <!-- link al login -->
@@ -115,5 +133,31 @@ nav {
         opacity: 1;
     }
 
+    .cart-count {
+        position: absolute;
+        top: -6px;
+        right: -10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-width: 20px;
+        height: 20px;
+
+        background-color: #ef4860;
+        color: white;
+
+        font-size: 0.75rem;
+
+        padding: 2px 6px;
+        border-radius: 50%;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+
+
+        &:hover {
+            color: white;
+        }
+    }
 }
 </style>

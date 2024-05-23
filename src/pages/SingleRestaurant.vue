@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { store } from '../store.js';
 
+import { eventBus } from '../eventBus.js';
 
 export default {
 
@@ -76,6 +77,11 @@ export default {
 
             // Nasconde il toggle 
             setTimeout(() => this.showAddToggle = false, 2000);
+
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+            const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemCount = updatedCart.reduce((acc, item) => acc + item.quantity, 0);
+            eventBus.emit('updateCart', itemCount);
         },
 
 
@@ -100,13 +106,20 @@ export default {
 
             // Nasconde il toggle
             setTimeout(() => this.showRemoveToggle = false, 2000);
+
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+            const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemCount = updatedCart.reduce((acc, item) => acc + item.quantity, 0);
+            eventBus.emit('updateCart', itemCount);
         },
 
         // ritorna la quantità di ogni piatto nel carrello
         getQuantity(dish) {
             let item = this.cart.find(item => item.dish.id === dish.id);
             return item ? item.quantity : 0;
-        }
+        },
+
+        
     },
 
 
