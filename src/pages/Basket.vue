@@ -2,6 +2,7 @@
 
 import { store } from '../store.js';
 import { eventBus } from '../eventBus.js';
+import AppPayment from '../components/AppPayment.vue';
 
 export default {
     name: 'Basket',
@@ -12,7 +13,13 @@ export default {
 
             // recupero il cart dal local storage
             cart: JSON.parse(localStorage.getItem('cart')) || [],
+
+            showPayment: false,
         };
+    },
+
+    components: {
+        AppPayment,
     },
 
     computed: {
@@ -111,7 +118,8 @@ export default {
                     </div>
 
                     <!-- rimozione di tutti gli articoli dal carrello -->
-                    <button type="button" class="btn btn-success">Concludi l'ordine</button>
+                    <button type="button" class="btn btn-success" @click="showPayment = true">Concludi l'ordine</button>
+                    <AppPayment v-if="showPayment" @close="showPayment = false" />
 
                     <!-- rimozione di tutti gli articoli dal carrello -->
                     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
