@@ -108,6 +108,10 @@ export default {
             <div v-if="cart.length > 0" class="my-order">
 
                 <div class="sidebar-r col-3">
+
+                    
+                    <OrderForm></OrderForm>
+                    
                     <!-- totale carrello -->
                     <div class="text-end fs-4">
                         <span>Totale:</span> <span class="fw-bold"> € {{ totalPrice }}</span>
@@ -174,14 +178,6 @@ export default {
                                     class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
-
-
-
-
-                    <!-- TEST -->
-                    <OrderForm></OrderForm>
-
-
                 </div>
 
             </div>

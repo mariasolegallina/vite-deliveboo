@@ -19,11 +19,7 @@ export default {
                 customer_phone: '',
                 total_price: 20,
 
-                dishes: [
-                    { dish_id: 1, quantity: 2 },
-                    { dish_id: 5, quantity: 1 },
-                    { dish_id: 6, quantity: 3 }
-                ],
+                dishes: [],
             },
 
             cart: JSON.parse(localStorage.getItem('cart')) || [],
@@ -35,10 +31,24 @@ export default {
 
     methods: {
         sendOrderRequest() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.forEach(item => {
+                let dish = {
+                    dish_id: item.dish.id,
+                    quantity: item.quantity
+                }
+                this.formData.dishes.push(dish);       
+            });
+
+
+
             axios.post(this.store.baseApiUrl + '/new-order', this.formData).then(res => {
                 console.log('Risposta API', res)
             });
-        }
+
+            localStorage.clear('cart');
+        },
+
     }
 
 }
@@ -81,6 +91,7 @@ export default {
 
 
     <button type="submit" class="btn btn-primary mb-5">Invia</button>
+
 
 </form>
 
