@@ -18,7 +18,17 @@ export default {
                 customer_email: '',
                 customer_phone: '',
                 total_price: 20,
+
+                dishes: [
+                    1,
+                    5,
+                    6
+                ],
             },
+
+            cart: JSON.parse(localStorage.getItem('cart')) || [],
+        
+            
 
         }
     },
