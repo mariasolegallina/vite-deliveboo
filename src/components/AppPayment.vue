@@ -1,25 +1,27 @@
 <script>
 import dropin from 'braintree-web-drop-in';
+import axios from 'axios';
 
 export default {
-
     name: 'AppPayment',
-
     data() {
         return {
-        clientToken: null,
+            clientToken: null,
+            dropinInstance: null,
         };
     },
     mounted() {
         this.getClientToken();
     },
     methods: {
-        getClientToken() {
-            axios.get('/api/braintree/token')
-                .then(response => {
-                this.clientToken = response.data.token;
+        async getClientToken() {
+            try {
+                const response = await axios.get('/api/braintree/token');
+                this.clientToken = response.data.clientToken;
                 this.initializeDropin();
-                });
+            } catch (error) {
+                console.error('Errore nel recuperare il client token:', error);
+            }
         },
         initializeDropin() {
             dropin.create({
@@ -27,8 +29,8 @@ export default {
                 container: '#dropin-container'
             }, (err, instance) => {
                 if (err) {
-                console.error("Failed to create Drop-in instance:", err);
-                return;
+                    console.error("Failed to create Drop-in instance:", err);
+                    return;
                 }
                 this.dropinInstance = instance;
                 console.log("Drop-in instance created successfully");
@@ -41,20 +43,23 @@ export default {
             }
             this.dropinInstance.requestPaymentMethod((err, payload) => {
                 if (err) {
-                console.error(err);
-                return;
+                    console.error(err);
+                    return;
                 }
 
                 axios.post('/api/braintree/checkout', {
-                payment_method_nonce: payload.nonce,
-                amount: this.$store.getters.totalPrice
+                    payment_method_nonce: payload.nonce,
+                    amount: this.$store.state.totalPrice // Assicurati che totalPrice sia corretto
                 })
                 .then(response => {
-                if (response.data.success) {
-                    alert('Pagamento effettuato con successo!');
-                } else {
-                    alert('Errore nel pagamento: ' + response.data.message);
-                }
+                    if (response.data.success) {
+                        alert('Pagamento effettuato con successo!');
+                    } else {
+                        alert('Errore nel pagamento: ' + response.data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Errore nel processo di pagamento:', error);
                 });
             });
         }
