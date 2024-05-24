@@ -20,9 +20,9 @@ export default {
                 total_price: 20,
 
                 dishes: [
-                    1,
-                    5,
-                    6
+                    { dish_id: 1, quantity: 2 },
+                    { dish_id: 5, quantity: 1 },
+                    { dish_id: 6, quantity: 3 }
                 ],
             },
 
@@ -46,7 +46,7 @@ export default {
 
 <template>
 
-<form @submit.prevent="sendOrderRequest()">
+<form @submit.prevent="sendOrderRequest">
 
     <div class="mb-3">
         <label for="customer_name" class="form-label">Nome</label>
