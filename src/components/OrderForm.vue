@@ -17,9 +17,10 @@ export default {
                 customer_address: '',
                 customer_email: '',
                 customer_phone: '',
-                total_price: 20,
+                total_price: '',
 
                 dishes: [],
+                restaurant_id: '',
             },
 
             cart: JSON.parse(localStorage.getItem('cart')) || [],
@@ -37,7 +38,10 @@ export default {
                     dish_id: item.dish.id,
                     quantity: item.quantity
                 }
-                this.formData.dishes.push(dish);       
+                this.formData.dishes.push(dish);    
+                
+                this.formData.total_price = localStorage.getItem('totalPrice');
+                this.formData.restaurant_id = localStorage.getItem('restaurantId');
             });
 
 
@@ -56,7 +60,7 @@ export default {
 
 <template>
 
-<form @submit.prevent="sendOrderRequest">
+<form @submit.prevent="sendOrderRequest" action="refresh">
 
     <div class="mb-3">
         <label for="customer_name" class="form-label">Nome</label>

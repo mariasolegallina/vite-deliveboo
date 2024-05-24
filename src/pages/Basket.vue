@@ -22,9 +22,16 @@ export default {
 
         // calcolo del totale di tutti i piatti
         totalPrice() {
-            return this.cart.reduce((total, item) => {
+            localStorage.setItem('totalPrice', 0)
+
+            let total_price = this.cart.reduce((total, item) => {
                 return total + (item.dish.price * item.quantity);
             }, 0).toFixed(2);
+
+            localStorage.setItem('totalPrice', total_price)
+
+            return total_price
+
         }
     },
 
