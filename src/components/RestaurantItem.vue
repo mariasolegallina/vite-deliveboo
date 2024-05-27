@@ -11,14 +11,15 @@ export default {
 </script>
 
 <template>
-    <!-- link al singolo ristorante -->
     <router-link :to="{name: 'single-restaurant', params: {id: restaurant.id}}">
         <div class="rest-card">
             <!-- immagine -->
-            <img 
-                :src="'http://localhost:8000/storage/' + restaurant.image" 
-                :alt="'immagine ristorante ' + restaurant.restaurant_name"
-            >
+            <div class="image-wrapper">
+                <img 
+                    :src="'http://localhost:8000/storage/' + restaurant.image" 
+                    :alt="'immagine ristorante ' + restaurant.restaurant_name"
+                >
+            </div>
 
             <!-- info ristorante -->
             <div class="rest-card__top">
@@ -27,16 +28,14 @@ export default {
             </div>
 
             <div class="rest-card__type">
-                
                 <!-- tipologie -->
                 <span 
-                v-for="currentType in restaurant.types"
-                :key="currentType.id"
-                class="type"
+                    v-for="currentType in restaurant.types"
+                    :key="currentType.id"
+                    class="type"
                 >
                     {{ currentType.name }}
                 </span>
-
             </div>
             <div class="overlay"></div>
         </div>
@@ -55,16 +54,37 @@ export default {
     height: 100%;
     @include box1;
 
+    .image-wrapper {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
     .rest-card__top {
         background-color: $light;
         padding: 14px;
+        display: flex;
+        flex-direction: column;
         flex-grow: 1;
+        gap: 6px;
 
         h2 {
             @include title2-semi;
+            margin: 0;
         }
         p {
             font-size: $txt6;
+            margin:0;
         }
     }
 
@@ -77,7 +97,7 @@ export default {
         gap: 6px;
 
         .type {
-            font-size: $txt6;
+            font-size: $txt5;
             text-transform: uppercase;
             color: $light;
         }
