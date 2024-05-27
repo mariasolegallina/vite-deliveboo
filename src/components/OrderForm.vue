@@ -25,11 +25,11 @@ export default {
             },
 
             cart: JSON.parse(localStorage.getItem('cart')) || [],
-        
-            
 
         }
     },
+
+
 
 
     mounted() {
@@ -46,7 +46,7 @@ export default {
             return;
             }
 
-
+            
             submitButton.addEventListener("click", () => {
             dropinInstance.requestPaymentMethod((err, payload) => {
                 console.log("log payload and err", payload, err);
@@ -67,11 +67,14 @@ export default {
 
                 axios.post(this.store.baseApiUrl + '/new-order', this.formData).then(res => {
                     console.log('Risposta API', res)
+                    
+
+                    window.location.replace('http://localhost:5173/conferma-ordine');
+
                 });
 
                 localStorage.clear('cart');
 
-                
 
                 }
             });
@@ -87,7 +90,7 @@ export default {
 
 <template>
 
-<form @submit.prevent="sendOrderRequest" action="refresh">
+<form @submit.prevent="sendOrderRequest" action="">
 
     <div class="mb-3">
         <label for="customer_name" class="form-label">Nome</label>

@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from './pages/HomePage.vue';
 import SingleRestaurant from './pages/SingleRestaurant.vue';
 import Basket from "./pages/Basket.vue";
+import OrderSuccess from "./pages/OrderSuccess.vue";
 
 const router = createRouter ({
     history: createWebHistory(),
@@ -28,6 +29,13 @@ const router = createRouter ({
             path: '/carrello',
             name: 'basket',
             component: Basket
+        },
+
+        // rotta ordine 
+        {
+            path: '/conferma-ordine',
+            name: 'order-success',
+            component: OrderSuccess
         },
     ]
 });
