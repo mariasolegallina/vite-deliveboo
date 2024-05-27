@@ -139,11 +139,13 @@ export default {
                 <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
                     <i class="fa-solid fa-chevron-left"></i>
                 </router-link>
-                <div class="page-title d-flex flex-column gap-2 ">
+                <div class="page-title">
                     <h2 class="title">{{ restaurant.restaurant_name }}</h2>
-                    <p><i class="fa-solid me-2 fa-location-dot"></i> {{ restaurant.address }}</p>
-                    <p><i class="fa-solid me-2 fa-phone"></i>+39  {{ user.phone_number }}</p>
-                    <p><i class="fa-solid me-2 fa-envelope"></i> {{ user.email }}</p>
+                    <p>
+                        <i class="fa-solid me-2 fa-location-dot"></i>{{ restaurant.address }}  
+                        <i class="fa-solid me-2 fa-phone"></i>+39 {{ user.phone_number }}  
+                        <i class="fa-solid me-2 fa-envelope"></i>{{ user.email }}
+                    </p>
                 </div>
             </div>
 
@@ -163,7 +165,10 @@ export default {
                         <div class="dish-card_text">
                             <div class="dish-info">
                                 <h3>{{ dish.name }}</h3>
-                                <p>{{ dish.description }}</p>
+                                <p>
+                                    {{ dish.description.slice(0, 100) }}
+                                    {{ dish.description.length > 100 ? '...' : '' }}
+                                </p>
                                 <span>€ {{ dish.price }}</span>
                             </div>
 
@@ -207,6 +212,14 @@ export default {
         p {
             font-size: $txt5;
             margin: 0;
+
+            i {
+                margin: 0 2px 0 10px;
+
+                &:first-of-type {
+                    margin-left: 0;
+                }
+            }
         }
     }
 }
@@ -231,7 +244,8 @@ ul {
     width: 100%;
 
     .dish-card_img {
-        width: 40%;
+        max-width: 40%;
+        aspect-ratio: 16 / 9;
 
         img {
             width: 100%;
