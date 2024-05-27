@@ -123,10 +123,10 @@ export default {
     <div class="mb-3">
         <label for="customer_email" class="form-label">E-mail</label>
         <input type="email" class="form-control" id="customer_email" name="customer_email" aria-describedby="emailHelp" v-model="formData.customer_email" required>
+        <div id="emailHelp" class="form-text">Non condivideremo la tua mail con terzi.</div>
         <div v-if="formErrors['customer_email']" class="alert alert-danger mt-3">
             {{ formErrors['customer_email'][0] }}
         </div>
-        <div id="emailHelp" class="form-text">Non condivideremo la tua mail con terzi.</div>
     </div>
 
 
