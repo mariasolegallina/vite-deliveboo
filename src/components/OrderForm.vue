@@ -69,7 +69,7 @@ export default {
                     console.log('Risposta API', res)
                     
 
-                    window.location.replace('http://localhost:5173/conferma-ordine');
+                    window.location.replace(this.store.baseUrl + '/conferma-ordine');
 
                 });
 
