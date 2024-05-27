@@ -13,8 +13,8 @@ export default {
 </script>
 
 <template>
-    <div>
-        YO BRO
+    <div class="container">
+        Ordine effettuato con successo!
     </div>
 </template>
 
