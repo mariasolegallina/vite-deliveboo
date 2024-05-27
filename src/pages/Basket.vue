@@ -115,9 +115,8 @@ export default {
             <!-- se il carrello contiene degli articoli li mostro -->
             <div v-if="cart.length > 0" class="my-order">
 
-                <div class="sidebar-r col-3">
-
-                    
+                <div class="sidebar-r col-4">
+ 
                     <OrderForm></OrderForm>
                                 
                 </div>
@@ -125,65 +124,75 @@ export default {
                 <!-- dettagli ordine -->
                 <div class="order-wrap flex-grow-1 ">
 
-                     <!-- dati ristorante -->
-                     <div class="restaurant d-flex flex-column gap-2 ">
-                        <h2 class="rest-name">{{ cart[0].restaurantInfo.restaurant_name }}</h2>
-                        <p><i class="fa-solid me-2 fa-location-dot"></i> {{ cart[0].restaurantInfo.address }}</p>
-                        <p><i class="fa-solid me-2 fa-phone"></i> +39 {{ cart[0].userInfo.phone_number }}</p>
-                        <p><i class="fa-solid me-2 fa-envelope"></i> {{ cart[0].userInfo.email }}</p>
-                    </div>
+                    <div class="order-top">
+                        <!-- svuota il carrello -->
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
 
-                    <div v-for="item in cart" :key="item.dish.id" class="order mb-3 ">
-                        <!-- dati articoli -->
-                        <div class="order__dishes">
-                            <div class="dish-name">{{ item.dish.name }} x {{ item.quantity }}</div>
-                            <div class="dish-price">€ {{ dishSumPrice(item) }}</div>
-                        </div>
+                        <!-- Modal svuotare il carrello -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                        <div class="buttons">
-                            <!-- modifica quantità -->
-                            <div class="mod-quantity">
-                                <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>
-                                <span class="number">{{ item.quantity }}</span>
-                                <button type="button" class="btn-right" @click="addQuantity(item)">+</button>
-                            </div>
+                                    <div class="modal-body">
+                                        Vuoi davvero svuotare il carrello? Tutti i dati inseriti andranno persi
+                                    </div>
 
-                            <!-- rimozione tutti gli articoli di quel tipo -->
-                            <button type="button" class="btn btn-outline-danger btn-delete" @click="removeDish(item)"><i
-                                    class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </div>
-
-
-                      <!-- totale carrello -->
-                      <div class="text-end fs-4">
-                        <span>Totale:</span> <span class="fw-bold"> € {{ totalPrice }}</span>
-                    </div>
-
-                    <!-- rimozione di tutti gli articoli dal carrello -->
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                        data-bs-target="#deleteModal">Svuota il carrello</button>
-
-                    <!-- Modal per la rimozione -->
-                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-
-                                <div class="modal-body">
-                                    Vuoi davvero svuotare il carrello? Tutti i dati inseriti andranno persi
-                                </div>
-
-                                <div class="modal-footer">
-                                    <!-- annulla azione -->
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Annulla</button>
-                                    <!-- conferma azione -->
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                                        @click="removeAll()">Prosegui</button>
+                                    <div class="modal-footer">
+                                        <!-- annulla azione -->
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Annulla</button>
+                                        <!-- conferma azione -->
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                            @click="removeAll()">Prosegui</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- totale carrello -->
+                        <div class="text-end fs-4">
+                            <span>Totale:</span> <span class="fw-bold"> € {{ totalPrice }}</span>
+                        </div>
+                    </div>
+
+                    <div v-for="item in cart" :key="item.dish.id" class="order">
+                        
+                        <!-- image -->
+                        <div v-if="item.dish.image" class="order-img">
+                            <img :src="'http://localhost:8000/storage/' + item.dish.image" alt="">
+                        </div>
+
+                        <div class="order-text">
+                            <!-- dati articoli -->
+                            <div class="order__dishes">
+                                <div class="dish-name">{{ item.dish.name }} x {{ item.quantity }}</div>
+                                <div class="dish-price">€ {{ dishSumPrice(item) }}</div>
+                            </div>
+
+                            <div class="buttons">
+                                <!-- modifica quantità -->
+                                <div class="mod-quantity">
+                                    <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>
+                                    <span class="number">{{ item.quantity }}</span>
+                                    <button type="button" class="btn-right" @click="addQuantity(item)">+</button>
+                                </div>
+
+                                <!-- rimozione tutti gli articoli di quel tipo -->
+                                <button type="button" class="btn btn-outline-danger btn-delete" @click="removeDish(item)"><i
+                                        class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- dati ristorante -->
+                    <div class="rest-info">
+                        <h2 class="title">{{ cart[0].restaurantInfo.restaurant_name }}</h2>
+                        <p>
+                            <i class="fa-solid me-2 fa-location-dot"></i> {{ cart[0].restaurantInfo.address }}  
+                            <i class="fa-solid me-2 fa-phone"></i> +39 {{ cart[0].userInfo.phone_number }}  
+                            <i class="fa-solid me-2 fa-envelope"></i> {{ cart[0].userInfo.email }}
+                        </p>
                     </div>
                 </div>
 
@@ -228,13 +237,15 @@ export default {
     align-items: flex-start;
     gap: 20px;
 
+    // sidebar
     .sidebar-r {
         display: flex;
         flex-direction: column;
         gap: 20px;
     }
 
-    .restaurant {
+    // restaurant-info
+    .rest-info {
         @include box1;
         padding: 10px 16px;
         margin-bottom: 20px;
@@ -243,35 +254,67 @@ export default {
 
         background-color: $grey1;
 
-        .rest-name {
+        .title {
             @include title2-semi;
         }
 
         p {
             font-size: $txt5;
             margin: 0;
+
+            i {
+                margin: 0 2px 0 10px;
+
+                &:first-of-type {
+                    margin-left: 0;
+                }
+            }
         }
     }
 
-    .order {
-        @include box1;
-        padding: 20px;
-
+    .order-wrap {
         display: flex;
-        flex: 1;
+        flex-direction: column;
+        gap: 20px;
 
-        justify-content: space-between;
-        align-items: flex-start;
-
-        .dish-name {
-            @include title2-semi;
-        }
-
-        .buttons {
+        .order-top {
             display: flex;
-            gap: 20px;
+            justify-content: space-between
         }
 
+        .order {
+            @include box1;
+            display: flex;
+            flex: 1;
+
+            .order-img {
+                aspect-ratio: 1 / 1;
+                max-width: 16%;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+            }
+
+            .order-text{
+                padding: 20px;
+                display: flex;
+                flex: 1;
+                justify-content: space-between;
+                align-items: flex-start;
+
+                .dish-name {
+                    @include title2-semi;
+                }
+
+                .buttons {
+                    display: flex;
+                    gap: 20px;
+                }
+                }
+        }
     }
 
 }
