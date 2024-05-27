@@ -57,7 +57,6 @@ export default {
                 cart.forEach(item => {
                     let dish = {
                         dish_id: item.dish.id,
-                        dish_name: item.dish.name,
                         quantity: item.quantity
                     }
                     this.formData.dishes.push(dish);    
