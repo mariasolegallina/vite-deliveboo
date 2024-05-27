@@ -21,6 +21,7 @@ export default {
 
                 dishes: [],
                 restaurant_id: '',
+                restaurant_name: '',
             },
 
             cart: JSON.parse(localStorage.getItem('cart')) || [],
@@ -30,30 +31,56 @@ export default {
         }
     },
 
-    methods: {
-        sendOrderRequest() {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.forEach(item => {
-                let dish = {
-                    dish_id: item.dish.id,
-                    quantity: item.quantity
-                }
-                this.formData.dishes.push(dish);    
-                
-                this.formData.total_price = localStorage.getItem('totalPrice');
-                this.formData.restaurant_id = localStorage.getItem('restaurantId');
-            });
 
+    mounted() {
+        var submitButton = document.querySelector("#submit-button");
 
-
-            axios.post(this.store.baseApiUrl + '/new-order', this.formData).then(res => {
-                console.log('Risposta API', res)
-            });
-
-            localStorage.clear('cart');
+        braintree.dropin.create(
+        {
+            authorization: "sandbox_bn3krc5m_5brrmwtybfkxy674",
+            selector: "#dropin-container",
         },
+        (err, dropinInstance) => {
+            if (err) {
+            console.error(err);
+            return;
+            }
 
+
+            submitButton.addEventListener("click", () => {
+            dropinInstance.requestPaymentMethod((err, payload) => {
+                console.log("log payload and err", payload, err);
+                if (err === null) {
+                console.log("funziona");
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.forEach(item => {
+                    let dish = {
+                        dish_id: item.dish.id,
+                        quantity: item.quantity
+                    }
+                    this.formData.dishes.push(dish);    
+                    
+                    this.formData.total_price = localStorage.getItem('totalPrice');
+                    this.formData.restaurant_id = localStorage.getItem('restaurantId');
+                });
+
+                axios.post(this.store.baseApiUrl + '/new-order', this.formData).then(res => {
+                    console.log('Risposta API', res)
+                });
+
+                localStorage.clear('cart');
+
+                
+
+                }
+            });
+            });
+        }
+    );
+    
     }
+
 
 }
 </script>
@@ -94,7 +121,14 @@ export default {
     </div>
 
 
-    <button type="submit" class="btn btn-primary mb-5">Invia</button>
+
+    <div id="dropin-wrapper">
+        <div id="checkout-message"></div>
+        <div id="dropin-container"></div>
+        <button id="submit-button" type="submit" class="btn btn-primary mb-5">Invia</button>
+    </div>
+
+
 
 
 </form>

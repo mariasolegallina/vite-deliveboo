@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from './pages/HomePage.vue';
 import SingleRestaurant from './pages/SingleRestaurant.vue';
 import Basket from "./pages/Basket.vue";
-import Payment from "./pages/Payment.vue";
 
 const router = createRouter ({
     history: createWebHistory(),
@@ -30,13 +29,6 @@ const router = createRouter ({
             name: 'basket',
             component: Basket
         },
-
-        // rotto pagamenti
-        {
-            path: '/checkout',
-            name: 'checkout',
-            component: Payment
-        }
     ]
 });
 

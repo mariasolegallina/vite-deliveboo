@@ -96,6 +96,7 @@ export default {
         }
     },
 
+   
 }
 </script>
 
@@ -118,14 +119,46 @@ export default {
 
                     
                     <OrderForm></OrderForm>
-                    
-                    <!-- totale carrello -->
-                    <div class="text-end fs-4">
-                        <span>Totale:</span> <span class="fw-bold"> € {{ totalPrice }}</span>
+                                
+                </div>
+
+                <!-- dettagli ordine -->
+                <div class="order-wrap flex-grow-1 ">
+
+                     <!-- dati ristorante -->
+                     <div class="restaurant d-flex flex-column gap-2 ">
+                        <h2 class="rest-name">{{ cart[0].restaurantInfo.restaurant_name }}</h2>
+                        <p><i class="fa-solid me-2 fa-location-dot"></i> {{ cart[0].restaurantInfo.address }}</p>
+                        <p><i class="fa-solid me-2 fa-phone"></i> +39 {{ cart[0].userInfo.phone_number }}</p>
+                        <p><i class="fa-solid me-2 fa-envelope"></i> {{ cart[0].userInfo.email }}</p>
                     </div>
 
-                    <!-- rimozione di tutti gli articoli dal carrello -->
-                    <button type="button" class="btn btn-success">Concludi l'ordine</button>
+                    <div v-for="item in cart" :key="item.dish.id" class="order mb-3 ">
+                        <!-- dati articoli -->
+                        <div class="order__dishes">
+                            <div class="dish-name">{{ item.dish.name }} x {{ item.quantity }}</div>
+                            <div class="dish-price">€ {{ dishSumPrice(item) }}</div>
+                        </div>
+
+                        <div class="buttons">
+                            <!-- modifica quantità -->
+                            <div class="mod-quantity">
+                                <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>
+                                <span class="number">{{ item.quantity }}</span>
+                                <button type="button" class="btn-right" @click="addQuantity(item)">+</button>
+                            </div>
+
+                            <!-- rimozione tutti gli articoli di quel tipo -->
+                            <button type="button" class="btn btn-outline-danger btn-delete" @click="removeDish(item)"><i
+                                    class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+
+
+                      <!-- totale carrello -->
+                      <div class="text-end fs-4">
+                        <span>Totale:</span> <span class="fw-bold"> € {{ totalPrice }}</span>
+                    </div>
 
                     <!-- rimozione di tutti gli articoli dal carrello -->
                     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
@@ -150,39 +183,6 @@ export default {
                                         @click="removeAll()">Prosegui</button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- dati ristorante -->
-                    <div class="restaurant d-flex flex-column gap-2 ">
-                        <h2 class="rest-name">{{ cart[0].restaurantInfo.restaurant_name }}</h2>
-                        <p><i class="fa-solid me-2 fa-location-dot"></i> {{ cart[0].restaurantInfo.address }}</p>
-                        <p><i class="fa-solid me-2 fa-phone"></i> +39 {{ cart[0].userInfo.phone_number }}</p>
-                        <p><i class="fa-solid me-2 fa-envelope"></i> {{ cart[0].userInfo.email }}</p>
-                    </div>
-                </div>
-
-                <!-- dettagli ordine -->
-                <div class="order-wrap flex-grow-1 ">
-
-                    <div v-for="item in cart" :key="item.dish.id" class="order mb-3 ">
-                        <!-- dati articoli -->
-                        <div class="order__dishes">
-                            <div class="dish-name">{{ item.dish.name }} x {{ item.quantity }}</div>
-                            <div class="dish-price">€ {{ dishSumPrice(item) }}</div>
-                        </div>
-
-                        <div class="buttons">
-                            <!-- modifica quantità -->
-                            <div class="mod-quantity">
-                                <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>
-                                <span class="number">{{ item.quantity }}</span>
-                                <button type="button" class="btn-right" @click="addQuantity(item)">+</button>
-                            </div>
-
-                            <!-- rimozione tutti gli articoli di quel tipo -->
-                            <button type="button" class="btn btn-outline-danger btn-delete" @click="removeDish(item)"><i
-                                    class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 </div>
