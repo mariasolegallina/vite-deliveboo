@@ -135,7 +135,7 @@ export default {
 
         <div class="mb-3">
             <label for="customer_phone" class="form-label">Numero di telefono</label>
-            <input type="text" class="form-control" id="customer_phone" name="customer_phone" v-model="formData.customer_phone" required pattern="[0-9]{10,12}" inputmode="numeric">
+            <input type="number" class="form-control" id="customer_phone" name="customer_phone" v-model="formData.customer_phone" min="8" max="10" inputmode="numeric">
             <div v-if="formErrors['customer_phone']" class="alert alert-danger mt-3">
                 {{ formErrors['customer_phone'][0] }}
             </div>
@@ -163,6 +163,11 @@ export default {
     @include box1;
     padding: 20px;
     background-color: $grey1;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    display: none;
 }
 
 
