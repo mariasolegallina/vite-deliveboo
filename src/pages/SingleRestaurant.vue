@@ -70,7 +70,7 @@ export default {
             } else {
 
                 // se l'id del ristorante non corrisponde al primo piatto nel carrello 
-                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta. Svuota il carrello per effettuare un nuovo ordine.';
+                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta. Concludi il tuo ordine oppure svuota il tuo carrello.';
             }
 
 
@@ -173,7 +173,7 @@ export default {
 
             <!-- wrong restaurant error message -->
             <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}
-                <button @click="removeAll()" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
+                <br><button @click="removeAll()" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
             </div>
 
 
