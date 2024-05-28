@@ -5,6 +5,8 @@ export default {
 
     data() {
         return {
+
+            cart: JSON.parse(localStorage.getItem('cart')) || [],
             
         }
     },

@@ -21,7 +21,6 @@ export default {
 
                 dishes: [],
                 restaurant_id: '',
-                restaurant_name: '',
             },
 
             formErrors: [],
@@ -75,6 +74,8 @@ export default {
                     }
                 });
 
+
+                // da commentare <3
                 localStorage.clear('cart');
 
 
