@@ -109,7 +109,7 @@ export default {
                 <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
                     <i class="fa-solid fa-chevron-left"></i>
                 </router-link>
-                <h2 class="title">Il mio ordine</h2>
+                <h2 class="title">Carrello</h2>
             </div>
 
             <!-- se il carrello contiene degli articoli li mostro -->

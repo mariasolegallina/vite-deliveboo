@@ -166,8 +166,7 @@ export default {
                             <div class="dish-info">
                                 <h3>{{ dish.name }}</h3>
                                 <p>
-                                    {{ dish.description.slice(0, 100) }}
-                                    {{ dish.description.length > 100 ? '...' : '' }}
+                                    {{ dish.description }}
                                 </p>
                                 <span>€ {{ dish.price }}</span>
                             </div>
@@ -244,7 +243,7 @@ ul {
     width: 100%;
 
     .dish-card_img {
-        max-width: 40%;
+        width: 30%;
         aspect-ratio: 16 / 9;
 
         img {
