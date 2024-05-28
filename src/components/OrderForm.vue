@@ -96,9 +96,9 @@ export default {
 
     <div class="customer-data">
 
-        <h3 class="fs-5">Indirizzo di spedizione</h3>
+        <h3 class="fs-5">Dettagli di spedizione</h3>
         <div class="mb-3">
-            <label for="customer_name" class="form-label">Nome</label>
+            <label for="customer_name" class="form-label">Nome *</label>
             <input type="text" class="form-control" id="customer_name" name="customer_name" v-model="formData.customer_name" required>
             <div v-if="formErrors['customer_name']" class="alert alert-danger mt-3">
                 {{ formErrors['customer_name'][0] }}
@@ -106,7 +106,7 @@ export default {
         </div>
 
         <div class="mb-3">
-            <label for="customer_lastname" class="form-label">Cognome</label>
+            <label for="customer_lastname" class="form-label">Cognome *</label>
             <input type="text" class="form-control" id="customer_lastname" name="customer_lastname" v-model="formData.customer_lastname" required>
             <div v-if="formErrors['customer_lastname']" class="alert alert-danger mt-3">
                 {{ formErrors['customer_lastname'][0] }}
@@ -114,7 +114,7 @@ export default {
         </div>
 
         <div class="mb-3">
-            <label for="customer_address" class="form-label">Indirizzo</label>
+            <label for="customer_address" class="form-label">Indirizzo *</label>
             <input type="text" class="form-control" id="customer_address" name="customer_address" v-model="formData.customer_address" required>
             <div v-if="formErrors['customer_address']" class="alert alert-danger mt-3">
                 {{ formErrors['customer_address'][0] }}
@@ -124,7 +124,7 @@ export default {
 
 
         <div class="mb-3">
-            <label for="customer_email" class="form-label">E-mail</label>
+            <label for="customer_email" class="form-label">E-mail *</label>
             <input type="email" class="form-control" id="customer_email" name="customer_email" aria-describedby="emailHelp" v-model="formData.customer_email" required>
             <div id="emailHelp" class="form-text">Non condivideremo la tua mail con terzi.</div>
             <div v-if="formErrors['customer_email']" class="alert alert-danger mt-3">
@@ -134,21 +134,24 @@ export default {
 
 
         <div class="mb-3">
-            <label for="customer_phone" class="form-label">Numero di telefono</label>
-            <input type="number" class="form-control" id="customer_phone" name="customer_phone" v-model="formData.customer_phone" min="8" max="10" inputmode="numeric">
+            <label for="customer_phone" class="form-label">Numero di telefono *</label>
+            <input type="number" class="form-control" id="customer_phone" name="customer_phone" v-model="formData.customer_phone" required>
+            <div id="emailHelp" class="form-text">Lo venderemo ai peggio call center</div>
             <div v-if="formErrors['customer_phone']" class="alert alert-danger mt-3">
                 {{ formErrors['customer_phone'][0] }}
             </div>
         </div>
+
+        <div id="dropin-wrapper">
+            <div id="checkout-message"></div>
+            <div id="dropin-container" class="mb-4"></div>
+            <button id="submit-button" type="submit" class="btn btn-success mb-2">Paga</button>
+        </div>
+
     </div>
 
 
 
-    <div id="dropin-wrapper">
-        <div id="checkout-message"></div>
-        <div id="dropin-container"></div>
-        <button id="submit-button" type="submit" class="btn btn-success mb-5">Paga</button>
-    </div>
 
 </form>
 

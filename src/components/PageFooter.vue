@@ -10,7 +10,7 @@ name: 'PageFooter',
     <footer>
         <section>
                 <div class="container">
-                    <p>Copyright Team3 2024</p>
+                    <p class="text-center">Copyright Team3 2024</p>
                 </div> 
 
         </section>
@@ -28,6 +28,7 @@ footer {
     background-color: $accent2;
 
     p {
+        margin: 0;
         color: white;
     }
 
