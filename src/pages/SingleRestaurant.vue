@@ -70,7 +70,7 @@ export default {
             } else {
 
                 // se l'id del ristorante non corrisponde al primo piatto nel carrello 
-                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta.';
+                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta. Svuota il carrello per effettuare un nuovo ordine.';
             }
 
 
@@ -107,6 +107,28 @@ export default {
         getQuantity(dish) {
             let item = this.cart.find(item => item.dish.id === dish.id);
             return item ? item.quantity : 0;
+        },
+
+
+        // funzione per aggiornare costantemente il carrello
+        updateLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+        },
+
+        emitCartUpdate() {
+            const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemCount = updatedCart.reduce((acc, item) => acc + item.quantity, 0);
+            eventBus.emit('updateCart', itemCount);
+        },
+
+        removeAll() {
+            // svuoto il carrello 
+            this.cart = [];
+            // aggiorno lo storage
+            this.updateLocalStorage();
+            this.emitCartUpdate();
+            this.errorMessage = ''
+
         },
 
         
@@ -150,7 +172,9 @@ export default {
             </div>
 
             <!-- wrong restaurant error message -->
-            <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+            <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}
+                <button @click="removeAll()" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
+            </div>
 
 
 
