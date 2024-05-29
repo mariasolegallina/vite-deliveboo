@@ -76,11 +76,6 @@ export default {
                             });
 
 
-
-                            //     da commentare <3
-
-
-
                         }
                     });
                 });

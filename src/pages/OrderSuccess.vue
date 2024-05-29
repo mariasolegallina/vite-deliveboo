@@ -1,7 +1,7 @@
 <script>
 
 import { eventBus } from '../eventBus.js';
-
+import { store } from '../store.js';
 
 
 export default {
@@ -10,13 +10,37 @@ export default {
     data() {
         return {
 
+            store,
+
             cart: JSON.parse(localStorage.getItem('cart')) || [],
+            tempCart:  JSON.parse(localStorage.getItem('cart')) || [],
+
+
+            total_price: JSON.parse(localStorage.getItem('totalPrice')) || [],
 
         }
     },
 
-    methods: {
 
+    methods: {
+        dishSumPrice(item) {
+            return (item.dish.price * item.quantity).toFixed(2);
+        },
+
+
+        // rimozione di tutti i piatti dal carrello
+        removeAll() {
+            // svuoto il carrello 
+            this.cart = [];
+            // aggiorno lo storage
+            this.updateLocalStorage();
+            this.emitCartUpdate();
+
+        },
+
+        // ---------------------------------------------- //
+
+        // funzione per aggiornare costantemente il carrello
         updateLocalStorage() {
             localStorage.setItem('cart', JSON.stringify(this.cart));
         },
@@ -26,18 +50,11 @@ export default {
             const itemCount = updatedCart.reduce((acc, item) => acc + item.quantity, 0);
             eventBus.emit('updateCart', itemCount);
         }
-
     },
 
     mounted() {
-
-        // svuoto il carrello 
-        this.cart = [];
-        // aggiorno lo storage
-        this.updateLocalStorage();
-        this.emitCartUpdate();
-
-    }
+        this.removeAll()
+    },
 
 }
 
@@ -55,27 +72,21 @@ export default {
                 Intanto ecco un riepilogo!
             </p>
 
+            <h3>Dati ristorante</h3>
             <p>
-
-                {{ cart[0].restaurantInfo.restaurant_name }}
+                <div>{{ tempCart[0].restaurantInfo.restaurant_name }}</div>
+                <div>{{ tempCart[0].restaurantInfo.address }}</div>
+                <div>+39 {{ tempCart[0].userInfo.phone_number }}</div>
             </p>
 
+            <h3>Riepilogo ordine</h3>
+            <p v-for="item in tempCart" >
+                {{ item.dish.name }} x {{ item.quantity }} = € {{ dishSumPrice(item) }}
+            </p>
             <p>
-
-                {{ cart[0].restaurantInfo.address }}
+                Totale: € {{ total_price }}
             </p>
 
-            <p>
-
-                {{ cart[0].restaurantInfo.user.phone_number }}
-            </p>
-
-
-
-            <p>
-
-                {{ cart[0].dish.name }} x {{ cart[0].dish.price }} x {{ cart[0].quantity }}
-            </p>
 
             <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
                 <i class="fa-solid fa-chevron-left"></i> Torna alla home
