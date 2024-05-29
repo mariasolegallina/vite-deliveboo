@@ -84,7 +84,7 @@ export default {
           <div class="side-bar">
             <h2>Filtra</h2>
 
-            <!-- filtri -->
+            <!-- filters -->
             <AppFilter @filter="handleFilter"></AppFilter>
 
           </div>
@@ -93,17 +93,15 @@ export default {
 
           <div class="main-content">
 
-            <!-- lista ristoranti -->
-            <div class="rest-list gap-3" v-if="filteredRestaurants.length > 0">
-
-        
-                <RestaurantItem 
+            <!-- restaurants list -->
+            <div class="row" v-if="filteredRestaurants.length > 0">
+              <div
+                class="col-lg-4 col-md-6 col-sm-12 mb-4"
                 v-for="restaurant in filteredRestaurants"
                 :key="restaurant.id"
-                :restaurant="restaurant"
-                >
-              </RestaurantItem>
-              
+              >
+                <RestaurantItem :restaurant="restaurant"></RestaurantItem>
+              </div>
             </div>        
 
             <!-- se non vengono trovati ristoranti con i filtri -->
@@ -133,31 +131,20 @@ export default {
   display: flex;
   gap: 24px;
 
-  .side-bar {
-    margin-right: 14px;
+}
 
-    h2 {
-      @include title2-semi;
-      color: $grey8;
-      margin-bottom: 14px;
-    }
-  }
+// sidebar
+.side-bar {
+flex-grow: 0;
+}
 
-  .main-content {
-    flex-grow: 1;
+// main content
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
 
-    h1 {
-    @include header-semi-prim;
-    }
-
-    .rest-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      // overflow-y: auto;
-      max-height: fit-content;
-    }
-
-  }
 }
 
 </style>
