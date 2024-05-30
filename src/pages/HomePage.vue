@@ -101,6 +101,7 @@ export default {
                 v-for="restaurant in filteredRestaurants"
                 :key="restaurant.id"
                 :restaurant="restaurant"
+                v-show="restaurant.dishes.length > 0"
                 >
               </RestaurantItem>
               
