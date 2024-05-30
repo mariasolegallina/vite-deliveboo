@@ -54,12 +54,17 @@ export default {
 
     // chiamate axios
     mounted() {
+
+        this.store.isLoading = true
+        
         axios.get(this.store.baseApiUrl + '/restaurants').then(res => [
 
         // tutti i ristoranti
           this.store.restaurants = res.data.results,
         // aggiorna i ristoranti da filtrare 
-          this.filteredRestaurants = res.data.results
+          this.filteredRestaurants = res.data.results,
+
+          this.store.isLoading = false
         ]),
         
         // ---------------------------------------------- //
@@ -77,52 +82,59 @@ export default {
 
 <template>
   <section>
-      <div class="container">
 
-        <!-- ---------------------------------------------- -->
+    <div v-if="store.isLoading" class="d-flex flex-column align-items-center mt-5 gap-5">
+        <div  class="spinner-border text-danger" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 
-          <div class="side-bar">
-            <h2>Filtra</h2>
+    <div class="container" v-else>
 
-            <!-- filtri -->
-            <AppFilter @filter="handleFilter"></AppFilter>
+      <!-- ---------------------------------------------- -->
+
+        <div class="side-bar">
+          <h2>Filtra</h2>
+
+          <!-- filtri -->
+          <AppFilter @filter="handleFilter"></AppFilter>
+
+        </div>
+
+      <!-- ---------------------------------------------- -->
+
+        <div class="main-content">
+
+          <!-- lista ristoranti -->
+          <div class="rest-list gap-3" v-if="filteredRestaurants.length > 0">
+
+      
+              <RestaurantItem 
+              v-for="restaurant in filteredRestaurants"
+              :key="restaurant.id"
+              :restaurant="restaurant"
+              v-show="restaurant.dishes.length > 0"
+              >
+            </RestaurantItem>
+            
+          </div>        
+
+          <!-- se non vengono trovati ristoranti con i filtri -->
+          <div v-else class="text-center">
+            
+            <h6>
+              Non sono stati trovati risultati per questa ricerca
+            </h6>
+            <div>
+              Aggiorna i filtri e riprova
+            </div>
 
           </div>
-
-        <!-- ---------------------------------------------- -->
-
-          <div class="main-content">
-
-            <!-- lista ristoranti -->
-            <div class="rest-list gap-3" v-if="filteredRestaurants.length > 0">
+        
+        </div>
 
         
-                <RestaurantItem 
-                v-for="restaurant in filteredRestaurants"
-                :key="restaurant.id"
-                :restaurant="restaurant"
-                v-show="restaurant.dishes.length > 0"
-                >
-              </RestaurantItem>
-              
-            </div>        
-
-            <!-- se non vengono trovati ristoranti con i filtri -->
-            <div v-else class="text-center">
-              
-              <h6>
-                Non sono stati trovati risultati per questa ricerca
-              </h6>
-              <div>
-                Aggiorna i filtri e riprova
-              </div>
-
-            </div>
-          
-          </div>
-
-          
-      </div>
+    </div>
   </section>
 </template>
 

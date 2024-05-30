@@ -34,6 +34,8 @@ export default {
 
 
     mounted() {
+
+        console.log(this.store.isLoading)
         var submitButton = document.querySelector("#submit-button");
 
         braintree.dropin.create(
@@ -52,7 +54,8 @@ export default {
                     dropinInstance.requestPaymentMethod((err, payload) => {
                         console.log("log payload and err", payload, err);
                         if (err === null) {
-                            // console.log("funziona");
+
+                            this.store.isLoading = true;
 
                             let cart = JSON.parse(localStorage.getItem('cart')) || [];
                             cart.forEach(item => {

@@ -33,6 +33,8 @@ export default {
 
     created() {
         this.loadCart();
+
+        this.store.isLoading = true
     },
 
     methods: {
@@ -146,6 +148,8 @@ export default {
         axios.get(this.store.baseApiUrl + '/restaurants/' + this.restaurantId).then(res => {
             this.restaurant = res.data.restaurant
             this.user = res.data.restaurant.user
+
+            this.store.isLoading = false
         })
     }
 
@@ -155,7 +159,13 @@ export default {
 
 <template>
     <section>
-        <div class="container">
+        <div v-if="store.isLoading" class="d-flex flex-column align-items-center mt-5 gap-5">
+            <div  class="spinner-border text-danger" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <div class="container" v-else>
 
             <div class="page-top">
                 <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">

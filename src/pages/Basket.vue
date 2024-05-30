@@ -1,6 +1,7 @@
 <script>
 
 import { eventBus } from '../eventBus.js';
+import { store } from '../store.js';
 
 import OrderForm from '../components/OrderForm.vue'
 
@@ -11,11 +12,17 @@ export default {
         return {
             // recupero il cart dal local storage
             cart: JSON.parse(localStorage.getItem('cart')) || [],
+
+            store, 
         };
     },
 
     components: {
         OrderForm,
+    },
+
+    mounted() {
+        this.store.isLoading = false
     },
 
     computed: {
@@ -102,7 +109,17 @@ export default {
 
 <template>
     <section>
-        <div class="container">
+        <div v-if="store.isLoading == true" class="d-flex flex-column align-items-center mt-5 gap-5">
+            <div  class="spinner-border text-danger" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div>
+                Stiamo processando il tuo ordine, attendi di essere reindirizzato...
+            </div>
+        </div>
+
+
+        <div v-else class="container">
 
             <!-- titolo e bottone home -->
             <div class="page-top">

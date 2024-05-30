@@ -6,6 +6,7 @@ export const store = reactive({
     types: [],
     restaurants: [],
     filteredRestaurants: [],
+    isLoading: true,
 
 
      
