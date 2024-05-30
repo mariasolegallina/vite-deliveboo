@@ -70,7 +70,7 @@ export default {
             } else {
 
                 // se l'id del ristorante non corrisponde al primo piatto nel carrello 
-                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta.';
+                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta. Concludi il tuo ordine oppure svuota il tuo carrello.';
             }
 
 
@@ -109,6 +109,28 @@ export default {
             return item ? item.quantity : 0;
         },
 
+
+        // funzione per aggiornare costantemente il carrello
+        updateLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify(this.cart));
+        },
+
+        emitCartUpdate() {
+            const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemCount = updatedCart.reduce((acc, item) => acc + item.quantity, 0);
+            eventBus.emit('updateCart', itemCount);
+        },
+
+        removeAll() {
+            // svuoto il carrello 
+            this.cart = [];
+            // aggiorno lo storage
+            this.updateLocalStorage();
+            this.emitCartUpdate();
+            this.errorMessage = ''
+
+        },
+
         
     },
 
@@ -139,18 +161,27 @@ export default {
                 <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
                     <i class="fa-solid fa-chevron-left"></i>
                 </router-link>
-                <div class="page-title">
+
+                <div class="rest-info">
                     <h2 class="title">{{ restaurant.restaurant_name }}</h2>
                     <p>
-                        <i class="fa-solid me-2 fa-location-dot"></i>{{ restaurant.address }}  
-                        <i class="fa-solid me-2 fa-phone"></i>+39 {{ user.phone_number }}  
-                        <i class="fa-solid me-2 fa-envelope"></i>{{ user.email }}
+                        <span>
+                            <i class="fa-solid me-2 fa-location-dot"></i>{{ restaurant.address }}  
+                        </span>
+                        <span>
+                            <i class="fa-solid me-2 fa-phone"></i>+39 {{ user.phone_number }}  
+                        </span>
+                        <span>
+                            <i class="fa-solid me-2 fa-envelope"></i>{{ user.email }}    
+                        </span>
                     </p>
                 </div>
             </div>
 
             <!-- wrong restaurant error message -->
-            <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+            <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}
+                <br><button @click="removeAll()" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
+            </div>
 
 
 
@@ -166,8 +197,7 @@ export default {
                             <div class="dish-info">
                                 <h3>{{ dish.name }}</h3>
                                 <p>
-                                    {{ dish.description.slice(0, 100) }}
-                                    {{ dish.description.length > 100 ? '...' : '' }}
+                                    {{ dish.description }}
                                 </p>
                                 <span>€ {{ dish.price }}</span>
                             </div>
@@ -195,23 +225,34 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 24px;
 
-    .page-title {
+    margin-bottom: 24px;
+
+    .rest-info {
         @include box1;
         padding: 10px 16px;
-        margin-bottom: 20px;
+    
         display: flex;
         flex-direction: column;
-
+        gap: 10px;
         background-color: $grey1;
 
         .title {
             @include title2-semi;
+
         }
 
         p {
             font-size: $txt5;
             margin: 0;
+
+            display: flex;
+            gap: 10px;
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+            }
 
             i {
                 margin: 0 2px 0 10px;
@@ -244,7 +285,7 @@ ul {
     width: 100%;
 
     .dish-card_img {
-        max-width: 40%;
+        width: 30%;
         aspect-ratio: 16 / 9;
 
         img {
@@ -325,3 +366,4 @@ ul {
     }
 }
 </style>
+
