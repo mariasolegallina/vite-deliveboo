@@ -15,6 +15,8 @@ export default {
         }
     },
 
+    emits: ['filter'], // dichiarare l'evento 'filtro'
+
     methods: {
        filterByTypes(type) {
             // ricerco l'index della tipologia 
@@ -36,14 +38,18 @@ export default {
 </script>
 
 <template>
-    <!-- lista delle tipologie -->
+
+    <h2>Filtra</h2>
+
+    <!-- types list -->
     <ul class="d-types">
         <li v-for="currentType in store.types" :key="currentType.name">
             <div class="type">
                 <a href="#" 
                 :class="['', activeTypes.includes(currentType.name) ? 'active' : 'deactive']"
                 @click="filterByTypes(currentType.name)"
-            ><i :class="activeTypes.includes(currentType.name) ? 'fa-regular fa-square-check' : 'fa-regular fa-square'"></i><span>{{ currentType.name }}</span></a>
+                >
+                <i :class="activeTypes.includes(currentType.name) ? 'fa-regular fa-square-check' : 'fa-regular fa-square'"></i><span>{{ currentType.name }}</span></a>
             </div>
         </li>
     </ul>
@@ -54,13 +60,24 @@ export default {
 @use "../style/partials/variables" as *;
 @use "../style/partials/mixins" as *;
 
+h2 {
+    @include title2-semi;
+    margin: 0 0 10px; 
+}
+
 .d-types {
     display:flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: 10px;
+    gap: 8px;
 
     padding: 0;
+    font-size: $txt5;
+
+    @media (max-width: 768px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
 
     .type {
         a {

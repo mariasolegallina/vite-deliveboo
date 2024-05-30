@@ -72,7 +72,7 @@ export default {
             } else {
 
                 // se l'id del ristorante non corrisponde al primo piatto nel carrello 
-                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta. Concludi il tuo ordine oppure svuota il tuo carrello.';
+                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta. Concludi il tuo ordine oppure svuota il carrello.';
             }
 
 
@@ -171,19 +171,35 @@ export default {
                 <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
                     <i class="fa-solid fa-chevron-left"></i>
                 </router-link>
-                <div class="page-title">
+
+                <!-- restaurant info -->
+                <div class="rest-info">
                     <h2 class="title">{{ restaurant.restaurant_name }}</h2>
                     <p>
-                        <i class="fa-solid me-2 fa-location-dot"></i>{{ restaurant.address }}  
-                        <i class="fa-solid me-2 fa-phone"></i>+39 {{ user.phone_number }}  
-                        <i class="fa-solid me-2 fa-envelope"></i>{{ user.email }}
+                        <span>
+                            <i class="fa-solid me-2 fa-location-dot"></i>{{ restaurant.address }}  
+                        </span>
+                        <span>
+                            <i class="fa-solid me-2 fa-phone"></i>+39 {{ user.phone_number }}  
+                        </span>
+                        <span>
+                            <i class="fa-solid me-2 fa-envelope"></i>{{ user.email }}    
+                        </span>
                     </p>
                 </div>
             </div>
 
             <!-- wrong restaurant error message -->
-            <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}
-                <br><button @click="removeAll()" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
+            <div v-if="errorMessage" class="alert alert-danger error-msg">
+                <span>{{ errorMessage }}</span>
+                <div class="error-btns">
+                    <button @click="removeAll()" type="button" class="btn btn-outline-danger">
+                        Svuota il carrello
+                    </button>
+                    <router-link class="btn btn-outline-secondary" :to="{ name: 'basket' }">
+                        Concludi l'ordine
+                    </router-link>
+                </div>
             </div>
 
 
@@ -202,7 +218,7 @@ export default {
                                 <p>
                                     {{ dish.description }}
                                 </p>
-                                <span>€ {{ dish.price }}</span>
+                                <span class="fw-semibold">€ {{ dish.price }}</span>
                             </div>
 
                             <!-- add to cart -->
@@ -228,26 +244,39 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 24px;
 
-    .page-title {
+    margin-bottom: 24px;
+
+    .rest-info {
         @include box1;
         padding: 10px 16px;
-        margin-bottom: 20px;
+    
         display: flex;
         flex-direction: column;
-
+        gap: 10px;
         background-color: $grey1;
 
         .title {
-            @include title2-semi;
+            @include title3-semi;
+            margin: 0;
+            padding: 0;
+
         }
 
         p {
             font-size: $txt5;
             margin: 0;
 
+            display: flex;
+            gap: 8px;
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+            }
+
             i {
-                margin: 0 2px 0 10px;
+                margin: 0 2px 0px;
 
                 &:first-of-type {
                     margin-left: 0;
@@ -255,12 +284,26 @@ export default {
             }
         }
     }
+
+    .btn:hover i {
+        color: $light;
+    }
 }
 
-.page-top .btn:hover i {
-    color: $light;
+
+// error message
+.error-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .error-btns {
+        display: flex;
+        gap: 10px;
+    }
 }
 
+// dishes list
 ul {
     padding: 0;
 
@@ -300,14 +343,18 @@ ul {
             flex-direction: column;
             align-items: flex-start;
             margin-bottom: 14px;
+            gap: 6px;
+
+            h3 {
+                @include title2-semi;
+                margin: 0;
+                padding: 0;
+            }
 
             p {
-                margin: 0 0 6px 0;
+                margin: 0;
                 padding: 0;
-
-                .title {
-                    font-weight: 600;
-                }
+                font-size: $txt6;
             }
         }
 
@@ -317,44 +364,43 @@ ul {
         }
 
         button {
-            background-color: white;
-            border: 1px solid $primary1;
-            padding: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            outline: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        background-color: white;
+        border: 1px solid $primary1;
+        padding: 4px 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-            &:hover {
-                background-color: $primary1;
-                color: white;
-            }
-
-            &:first-of-type {
-                // border-right: none;
-                border-top-left-radius: 0.375rem;
-                border-bottom-left-radius: 0.375rem;
-            }
-
-            &:last-of-type {
-                // border-left: none;
-                border-top-right-radius: 0.375rem;
-                border-bottom-right-radius: 0.375rem;
-            }
+        &:hover {
+            background-color: $primary1;
+            color: white;
         }
 
-
-        .number {
-            padding: 10px;
-            border: 1px solid $primary1;
-            border-left: none;
-            border-right: none;
-            min-width: 40px;
-            /* Assicura che l'elemento non si deformi */
-            text-align: center;
+        &:first-of-type {
+            // border-right: none;
+            border-top-left-radius: 0.375rem;
+            border-bottom-left-radius: 0.375rem;
         }
+
+        &:last-of-type {
+            // border-left: none;
+            border-top-right-radius: 0.375rem;
+            border-bottom-right-radius: 0.375rem;
+        }
+    }
+
+    .number {
+        padding: 4px 8px;
+        border: 1px solid $primary1;
+        border-left: none;
+        border-right: none;
+        min-width: 40px;
+        text-align: center;
+    }
     }
 }
 </style>
+

@@ -93,11 +93,9 @@ export default {
 
       <!-- ---------------------------------------------- -->
 
-        <div class="side-bar">
-          <h2>Filtra</h2>
-
-          <!-- filtri -->
-          <AppFilter @filter="handleFilter"></AppFilter>
+          <div class="side-bar">
+            <!-- filtri -->
+            <AppFilter @filter="handleFilter"></AppFilter>
 
         </div>
 
@@ -146,6 +144,10 @@ export default {
   display: flex;
   gap: 24px;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
   .side-bar {
     margin-right: 14px;
 
@@ -168,6 +170,15 @@ export default {
       grid-template-columns: repeat(3, 1fr);
       // overflow-y: auto;
       max-height: fit-content;
+
+      @media (max-width: 992px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
     }
 
   }
