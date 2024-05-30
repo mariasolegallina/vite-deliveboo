@@ -290,8 +290,9 @@ export default {
             display: flex;
 
             .dish-img {
-                aspect-ratio: 1 / 1;
-                max-width: 16%;
+                aspect-ratio: 16 / 9;
+                max-width: 40%;
+                min-width: 16%;
 
                 img {
                     width: 100%;
@@ -305,8 +306,8 @@ export default {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                gap: 18px;
-                flex-grow: 1;
+                gap: 16px;
+                // flex-grow: 1;
 
                 @media (max-width: 768px) {
                     justify-content: flex-start;

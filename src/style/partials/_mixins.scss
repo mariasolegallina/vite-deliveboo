@@ -46,8 +46,16 @@
   }
 }
 
-@mixin title3-semi {
+@mixin title3 {
   font-size: $txt4;
+
+  @media (max-width: 768px) {
+    font-size: $txt5;
+  }
+}
+
+@mixin title3-semi {
+  @include title3;
   font-weight: 600;
 
   @media (max-width: 768px) {

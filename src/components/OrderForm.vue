@@ -94,10 +94,11 @@ export default {
 
 <form @submit.prevent="sendOrderRequest" action="">
 
-    <div class="customer-data">
+    <div class="customer-info">
 
-        <h3 class="fs-5">Indirizzo di spedizione</h3>
-        <div class="mb-3">
+        <h3>Indirizzo di spedizione</h3>
+
+        <div class="form-input">
             <label for="customer_name" class="form-label">Nome</label>
             <input type="text" class="form-control" id="customer_name" name="customer_name" v-model="formData.customer_name" required>
             <div v-if="formErrors['customer_name']" class="alert alert-danger mt-3">
@@ -105,7 +106,7 @@ export default {
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="form-input">
             <label for="customer_lastname" class="form-label">Cognome</label>
             <input type="text" class="form-control" id="customer_lastname" name="customer_lastname" v-model="formData.customer_lastname" required>
             <div v-if="formErrors['customer_lastname']" class="alert alert-danger mt-3">
@@ -113,7 +114,7 @@ export default {
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="form-input">
             <label for="customer_address" class="form-label">Indirizzo</label>
             <input type="text" class="form-control" id="customer_address" name="customer_address" v-model="formData.customer_address" required>
             <div v-if="formErrors['customer_address']" class="alert alert-danger mt-3">
@@ -123,31 +124,32 @@ export default {
 
 
 
-        <div class="mb-3">
+        <div class="form-input">
             <label for="customer_email" class="form-label">E-mail</label>
             <input type="email" class="form-control" id="customer_email" name="customer_email" aria-describedby="emailHelp" v-model="formData.customer_email" required>
-            <div id="emailHelp" class="form-text">Non condivideremo la tua mail con terzi.</div>
+            <!-- <div id="emailHelp" class="form-text">Non condivideremo la tua mail con terzi.</div> -->
             <div v-if="formErrors['customer_email']" class="alert alert-danger mt-3">
                 {{ formErrors['customer_email'][0] }}
             </div>
         </div>
 
 
-        <div class="mb-3">
+        <div class="form-input">
             <label for="customer_phone" class="form-label">Numero di telefono</label>
             <input type="text" class="form-control" id="customer_phone" name="customer_phone" v-model="formData.customer_phone" required pattern="[0-9]{10,12}" inputmode="numeric">
             <div v-if="formErrors['customer_phone']" class="alert alert-danger mt-3">
                 {{ formErrors['customer_phone'][0] }}
             </div>
         </div>
-    </div>
 
+        <div class="form-text">Non condivideremo i tuoi dati con terzi.</div>
 
-
-    <div id="dropin-wrapper">
+        <!-- payment box -->
+        <div id="dropin-wrapper">
         <div id="checkout-message"></div>
         <div id="dropin-container"></div>
-        <button id="submit-button" type="submit" class="btn btn-success mb-5">Paga</button>
+        <button id="submit-button" type="submit" class="btn btn-success">Paga</button>
+    </div>
     </div>
 
 </form>
@@ -159,10 +161,42 @@ export default {
 @use "../style/partials/variables" as *;
 @use "../style/partials/mixins" as *;
 
-.customer-data {
+.customer-info {
     @include box1;
     padding: 20px;
     background-color: $grey1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    h3 {
+        @include title3-semi;
+    }
+
+    .form-input {
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .form-label {
+            font-size: $txt5;
+
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .form-text {
+        font-size: $txt6;
+    }
+
+    #submit-button {
+        width: 100%;
+    }
 }
 
 
