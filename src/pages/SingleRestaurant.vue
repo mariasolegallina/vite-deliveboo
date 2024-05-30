@@ -162,6 +162,7 @@ export default {
                     <i class="fa-solid fa-chevron-left"></i>
                 </router-link>
 
+                <!-- restaurant info -->
                 <div class="rest-info">
                     <h2 class="title">{{ restaurant.restaurant_name }}</h2>
                     <p>
@@ -182,7 +183,7 @@ export default {
             <div v-if="errorMessage" class="alert alert-danger error-msg">
                 <span>{{ errorMessage }}</span>
                 <div class="error-btns">
-                    <button @click="removeAll()" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    <button @click="removeAll()" type="button" class="btn btn-outline-danger">
                         Svuota il carrello
                     </button>
                     <router-link class="btn btn-outline-secondary" :to="{ name: 'basket' }">
@@ -207,7 +208,7 @@ export default {
                                 <p>
                                     {{ dish.description }}
                                 </p>
-                                <span>€ {{ dish.price }}</span>
+                                <span class="fw-semibold">€ {{ dish.price }}</span>
                             </div>
 
                             <!-- add to cart -->
