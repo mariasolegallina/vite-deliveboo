@@ -70,7 +70,7 @@ export default {
             } else {
 
                 // se l'id del ristorante non corrisponde al primo piatto nel carrello 
-                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta. Concludi il tuo ordine oppure svuota il tuo carrello.';
+                this.errorMessage = 'Puoi ordinare da un solo ristorante per volta. Concludi il tuo ordine oppure svuota il carrello.';
             }
 
 
@@ -179,8 +179,16 @@ export default {
             </div>
 
             <!-- wrong restaurant error message -->
-            <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}
-                <br><button @click="removeAll()" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
+            <div v-if="errorMessage" class="alert alert-danger error-msg">
+                <span>{{ errorMessage }}</span>
+                <div class="error-btns">
+                    <button @click="removeAll()" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        Svuota il carrello
+                    </button>
+                    <router-link class="btn btn-outline-secondary" :to="{ name: 'basket' }">
+                        Concludi l'ordine
+                    </router-link>
+                </div>
             </div>
 
 
@@ -248,14 +256,14 @@ export default {
             margin: 0;
 
             display: flex;
-            gap: 10px;
+            gap: 14px;
 
             @media (max-width: 768px) {
                 flex-direction: column;
             }
 
             i {
-                margin: 0 2px 0 10px;
+                margin: 0 2px 0px;
 
                 &:first-of-type {
                     margin-left: 0;
@@ -263,12 +271,26 @@ export default {
             }
         }
     }
+
+    .btn:hover i {
+        color: $light;
+    }
 }
 
-.page-top .btn:hover i {
-    color: $light;
+
+// error message
+.error-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .error-btns {
+        display: flex;
+        gap: 10px;
+    }
 }
 
+// dishes list
 ul {
     padding: 0;
 
