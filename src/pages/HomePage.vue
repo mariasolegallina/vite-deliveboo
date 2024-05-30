@@ -82,8 +82,7 @@ export default {
         <!-- ---------------------------------------------- -->
 
           <div class="side-bar">
-            <h2>Filtra</h2>
-
+            
             <!-- filters -->
             <AppFilter @filter="handleFilter"></AppFilter>
 
@@ -105,7 +104,7 @@ export default {
             </div>        
 
             <!-- se non vengono trovati ristoranti con i filtri -->
-            <div v-else class="text-center">
+            <div v-else>
               
               <h6>
                 Non sono stati trovati risultati per questa ricerca
@@ -113,9 +112,7 @@ export default {
               <div>
                 Aggiorna i filtri e riprova
               </div>
-
             </div>
-          
           </div>
 
           
@@ -130,6 +127,11 @@ export default {
 .container {
   display: flex;
   gap: 24px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+  }
 
 }
 
