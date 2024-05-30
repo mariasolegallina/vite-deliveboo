@@ -248,7 +248,9 @@ export default {
         background-color: $grey1;
 
         .title {
-            @include title2-semi;
+            @include title3-semi;
+            margin: 0;
+            padding: 0;
 
         }
 
@@ -257,7 +259,7 @@ export default {
             margin: 0;
 
             display: flex;
-            gap: 14px;
+            gap: 8px;
 
             @media (max-width: 768px) {
                 flex-direction: column;
@@ -331,14 +333,18 @@ ul {
             flex-direction: column;
             align-items: flex-start;
             margin-bottom: 14px;
+            gap: 6px;
+
+            h3 {
+                @include title2-semi;
+                margin: 0;
+                padding: 0;
+            }
 
             p {
-                margin: 0 0 6px 0;
+                margin: 0;
                 padding: 0;
-
-                .title {
-                    font-weight: 600;
-                }
+                font-size: $txt6;
             }
         }
 
@@ -348,44 +354,42 @@ ul {
         }
 
         button {
-            background-color: white;
-            border: 1px solid $primary1;
-            padding: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            outline: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        background-color: white;
+        border: 1px solid $primary1;
+        padding: 4px 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-            &:hover {
-                background-color: $primary1;
-                color: white;
-            }
-
-            &:first-of-type {
-                // border-right: none;
-                border-top-left-radius: 0.375rem;
-                border-bottom-left-radius: 0.375rem;
-            }
-
-            &:last-of-type {
-                // border-left: none;
-                border-top-right-radius: 0.375rem;
-                border-bottom-right-radius: 0.375rem;
-            }
+        &:hover {
+            background-color: $primary1;
+            color: white;
         }
 
-
-        .number {
-            padding: 10px;
-            border: 1px solid $primary1;
-            border-left: none;
-            border-right: none;
-            min-width: 40px;
-            /* Assicura che l'elemento non si deformi */
-            text-align: center;
+        &:first-of-type {
+            // border-right: none;
+            border-top-left-radius: 0.375rem;
+            border-bottom-left-radius: 0.375rem;
         }
+
+        &:last-of-type {
+            // border-left: none;
+            border-top-right-radius: 0.375rem;
+            border-bottom-right-radius: 0.375rem;
+        }
+    }
+
+    .number {
+        padding: 4px 8px;
+        border: 1px solid $primary1;
+        border-left: none;
+        border-right: none;
+        min-width: 40px;
+        text-align: center;
+    }
     }
 }
 </style>

@@ -122,6 +122,36 @@ export default {
                     <!-- DISH LIST -->
                     <div class="dish-list">
 
+                        <!-- dish card -->
+                        <div v-for="item in cart" :key="item.dish.id" class="dish-card">
+                        
+                            <div v-if="item.dish.image" class="dish-img">
+                                <img :src="'http://localhost:8000/storage/' + item.dish.image" alt="">
+                            </div>
+
+                            <div class="dish-txt">
+                                <!-- dati piatto -->
+                                <div class="dish-info">
+                                    <div class="name">{{ item.dish.name }}</div>
+                                    <div class="price">€ {{item.dish.price }} x {{item.quantity }} = € {{ dishSumPrice(item) }}</div>
+                                </div>
+
+                                <div class="buttons">
+                                    <!-- modifica quantità -->
+                                    <div class="mod-quantity">
+                                        <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>
+                                        <span class="number">{{ item.quantity }}</span>
+                                        <button type="button" class="btn-right" @click="addQuantity(item)">+</button>
+                                    </div>
+
+                                    <!-- elimina questo piatto -->
+                                    <button type="button" class="btn btn-delete" @click="removeDish(item)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- delete all + total -->
                         <div class="order-total">
                             <button type="button" class="btn btn-outline-danger empty" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
@@ -153,38 +183,6 @@ export default {
                             </div>
                         </div>
 
-                        <!-- dish card -->
-                        <div v-for="item in cart" :key="item.dish.id" class="dish-card">
-                        
-                            <div v-if="item.dish.image" class="dish-img">
-                                <img :src="'http://localhost:8000/storage/' + item.dish.image" alt="">
-                            </div>
-
-                            <div class="dish-txt">
-                                <!-- dati piatto -->
-                                <div class="dish-info">
-                                    <div class="name">{{ item.dish.name }} x {{ item.quantity }}</div>
-                                    <div class="price">€ {{ dishSumPrice(item) }}</div>
-                                </div>
-
-                                <div class="buttons">
-                                    <!-- modifica quantità -->
-                                    <div class="mod-quantity">
-                                        <button type="button" class="btn-left" @click="removeQuantity(item)">-</button>
-                                        <span class="number">{{ item.quantity }}</span>
-                                        <button type="button" class="btn-right" @click="addQuantity(item)">+</button>
-                                    </div>
-
-                                    <!-- elimina questo piatto -->
-                                    <button type="button" class="btn btn-delete" @click="removeDish(item)">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="button" class="btn btn-outline-danger empty2" data-bs-toggle="modal" data-bs-target="#deleteModal">Svuota il carrello</button>
-
                         <!-- restaurant info -->
                         <div class="rest-info">
                             <h2 class="title">{{ cart[0].restaurantInfo.restaurant_name }}</h2>
@@ -205,7 +203,7 @@ export default {
 
 
                     <!-- SIDEBAR -->
-                    <div class="sidebar-r col-md-4 col-xs-12">   
+                    <div class="payment col-md-4 col-xs-12">   
                         <OrderForm></OrderForm>              
                     </div>
                 </div>
@@ -277,34 +275,13 @@ export default {
             justify-content: space-between;
             align-items: center;
 
+            .empty {
+                font-size: $txt5;
+            }
+
             .total {
                 font-size: $txt3;
             }
-
-            @media (max-width: 768px) {
-                justify-content: flex-end;           
-            }
-        }
-
-        // btn delete all
-        .empty,
-        .empty2 {
-            font-size: $txt5;
-        }
-
-        @media (max-width: 768px) {
-            .empty {
-                display: none;
-            } 
-        }
-
-        .empty2 {
-            display: none;
-
-            @media (max-width: 768px) {
-
-                display: block;          
-            } 
         }
 
         // dish card
@@ -328,17 +305,24 @@ export default {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                gap: 24px;
+                gap: 18px;
                 flex-grow: 1;
+
+                @media (max-width: 768px) {
+                    justify-content: flex-start;
+                }
 
 
                 .dish-info {
                     display: flex;
-                    justify-content: space-between;
-                    gap: 24px;
+                    flex-direction: column;
 
                     .name {
-                        @include title2-semi
+                        @include title3-semi;
+                    }
+
+                    .price {
+                        font-size: $txt5;
                     }
 
                 }
@@ -357,7 +341,9 @@ export default {
             background-color: $grey1;
 
             .title {
-                @include title2-semi;
+                @include title3-semi;
+                margin: 0;
+                padding: 0;
 
             }
 
@@ -366,9 +352,9 @@ export default {
                 margin: 0;
 
                 display: flex;
-                gap: 14px;
+                gap: 8px;
 
-                @media (max-width: 768px) {
+                @media (max-width: 992px) {
                     flex-direction: column;
                 }
 
@@ -384,18 +370,15 @@ export default {
 
     }
 
-    // PAGAMENTO
-    .payment {
-
-    }
-
 }
 
 // DISH-CARD -> BUTTONS
 .buttons {
     display: flex;
     gap: 24px;
-    justify-content: flex-end;
+    justify-content: flex-start;
+
+    font-size: $txt4;
 
     .mod-quantity {
         display: flex;
@@ -405,7 +388,7 @@ export default {
     button {
         background-color: white;
         border: 1px solid $primary1;
-        padding: 10px;
+        padding: 4px 8px;
         cursor: pointer;
         transition: background-color 0.3s;
         outline: none;
@@ -432,7 +415,7 @@ export default {
     }
 
     .number {
-        padding: 10px;
+        padding: 4px 8px;
         border: 1px solid $primary1;
         border-left: none;
         border-right: none;
@@ -441,7 +424,7 @@ export default {
     }
 
     .btn-delete{
-        padding: 10px;
+        padding: 4px 8px;
         border: 1px solid $primary1;
         border-radius: 0.375rem;
         min-width: 40px;
@@ -453,193 +436,4 @@ export default {
     }
 }
 
-
-// @media (max-width: 768px) {
-//         flex-direction: column;
-//     }
-
-// .my-order {
-
-//     display: flex;
-//     align-items: flex-start;
-//     gap: 20px;
-
-//     @media (max-width: 768px) {
-//         flex-direction: column;
-//     }
-
-//     // sidebar
-//     .sidebar-r {
-//         display: flex;
-//         flex-direction: column;
-//         gap: 20px;
-//     }
-
-//     // restaurant-info
-//     .rest-info {
-//         @include box1;
-//         padding: 10px 16px;
-//         margin-bottom: 20px;
-//         display: flex;
-//         flex-direction: column;
-
-//         background-color: $grey1;
-
-//         .title {
-//             @include title2-semi;
-//         }
-
-//         p {
-//             font-size: $txt5;
-//             margin: 0;
-
-//             i {
-//                 margin: 0 2px 0 10px;
-
-//                 &:first-of-type {
-//                     margin-left: 0;
-//                 }
-//             }
-//         }
-//     }
-
-//     .order-wrap {
-//         display: flex;
-//         flex-direction: column;
-//         gap: 20px;
-
-//         .order-top {
-//             display: flex;
-//             justify-content: space-between;
-
-//             .btns {
-//                 display: flex;
-//                 gap: 10px;
-//             }
-//         }
-
-//         .order {
-//             @include box1;
-//             display: flex;
-//             flex: 1;
-
-//             .order-img {
-//                 aspect-ratio: 1 / 1;
-//                 max-width: 16%;
-
-//         img {
-//             width: 100%;
-//             height: 100%;
-//             object-fit: cover;
-//         }
-//             }
-
-//             .order-text{
-//                 padding: 20px;
-//                 display: flex;
-//                 flex: 1;
-//                 justify-content: space-between;
-//                 align-items: flex-start;
-
-//                 .dish-name {
-//                     @include title2-semi;
-//                 }
-
-//                 .buttons {
-//                     display: flex;
-//                     gap: 20px;
-//                 }
-//                 }
-//         }
-//     }
-
-// }
-
-// .buttons {
-//     .mod-quantity {
-//         display: flex;
-//         align-items: center;
-//     }
-
-//     button {
-//         background-color: white;
-//         border: 1px solid $primary1;
-//         padding: 10px;
-//         cursor: pointer;
-//         transition: background-color 0.3s;
-//         outline: none;
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-
-//         &:hover {
-//             background-color: $primary1;
-//             color: white;
-//         }
-
-//         &:first-of-type {
-//             // border-right: none;
-//             border-top-left-radius: 0.375rem;
-//             border-bottom-left-radius: 0.375rem;
-//         }
-
-//         &:last-of-type {
-//             // border-left: none;
-//             border-top-right-radius: 0.375rem;
-//             border-bottom-right-radius: 0.375rem;
-//         }
-//     }
-
-//     .rest-info {
-//         @include box1;
-//         padding: 10px 16px;
-    
-//         display: flex;
-//         flex-direction: column;
-//         gap: 10px;
-//         background-color: $grey1;
-
-//         .title {
-//             @include title2-semi;
-
-//         }
-
-//         p {
-//             font-size: $txt5;
-//             margin: 0;
-
-//             display: flex;
-//             gap: 14px;
-
-//             @media (max-width: 768px) {
-//                 flex-direction: column;
-//             }
-
-//             i {
-//                 margin: 0 2px 0px;
-
-//                 &:first-of-type {
-//                     margin-left: 0;
-//                 }
-//             }
-//         }
-//     }
-
-//     .btn:hover i {
-//         color: $light;
-//     }
-
-//     .number {
-//         padding: 10px;
-//         border: 1px solid $primary1;
-//         border-left: none;
-//         border-right: none;
-//         min-width: 40px;
-//         text-align: center;
-//     }
-
-//     .btn-delete:hover i {
-//         color: $light;
-//     }
-// }
 </style>
