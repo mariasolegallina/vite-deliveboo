@@ -58,14 +58,14 @@ export default {
         }
     },
 
-    mounted() {
+    // mounted() {
         
-        this.removeAll()
-    },
+    //     this.removeAll()
+    // },
 
-    beforeMount() {
-        this.redirect()
-    }
+    // beforeMount() {
+    //     this.redirect()
+    // }
 
 }
 
@@ -73,9 +73,10 @@ export default {
 
 <template>
     <section>
-        <div class="container">
+        <div class="container align-items-center justify-content-center">
 
-            <div class="order-success">
+            <div class="order-success mb-3 text-center">
+                <i class="fa-regular fa-circle-check fs-1 text-center" style="color: #3fc723;"></i>
                 <h2>
                     Ordine effettuato con successo!
                 </h2>
@@ -84,9 +85,9 @@ export default {
                 </p>   
             </div>
             
-            <div class="details">
+            <div class="details row gap-2 mb-3 justify-content-center">
                 <!-- order details -->
-                <div class="order-details">
+                <div class="order-details col-12 col-md-6">
                     <h3>Riepilogo ordine</h3>
                     <p v-for="item in tempCart" >
                         {{ item.dish.name }} x {{ item.quantity }} = € {{ dishSumPrice(item) }}
@@ -98,7 +99,7 @@ export default {
                 </div>
 
                 <!-- restaurant info -->
-                <div class="rest-info col-md-3">
+                <div class="rest-info col-12 col-md-6">
                     <h2 class="title">{{ tempCart[0].restaurantInfo.restaurant_name }}</h2>
                     <p>
                         <span>
@@ -111,9 +112,11 @@ export default {
                 </div>
             </div>
 
-            <router-link class="btn btn-outline-dark " :to="{ name: 'home' }">
-                <i class="fa-solid fa-chevron-left"></i> Torna alla home
-            </router-link>
+            <div class="d-flex justify-content-center">
+                <router-link class="btn btn-outline-dark" :to="{ name: 'home' }">
+                    <i class="fa-solid fa-chevron-left"></i> Torna alla home
+                </router-link>
+            </div>
         </div>
     </section>
 </template>
@@ -123,10 +126,6 @@ export default {
 @use "../style/partials/mixins" as *;
 
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    align-items: flex-start;
 
     .order-success {
         display: flex;
@@ -152,17 +151,11 @@ export default {
 .details {
 
     display: flex;
-    gap: 24px;
-    
-    @media (max-width: 992px) {
-        flex-direction: column;
-    }
 
     // order details
     .order-details {
         @include box1;
         padding: 24px;
-        flex-grow: 1;
 
         display: flex;
         flex-direction: column;
