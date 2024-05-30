@@ -72,11 +72,12 @@ h2 {
     gap: 8px;
 
     padding: 0;
-    font-size: $txt5;
+    font-size: $txt3;
 
     @media (max-width: 768px) {
         flex-direction: row;
         flex-wrap: wrap;
+        font-size: $txt4;
     }
 
     .type {

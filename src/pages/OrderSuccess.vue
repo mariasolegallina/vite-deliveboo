@@ -58,14 +58,14 @@ export default {
         }
     },
 
-    // mounted() {
+    mounted() {
         
-    //     this.removeAll()
-    // },
+        this.removeAll()
+    },
 
-    // beforeMount() {
-    //     this.redirect()
-    // }
+    beforeMount() {
+        this.redirect()
+    }
 
 }
 
