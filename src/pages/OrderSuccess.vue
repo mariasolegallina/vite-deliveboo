@@ -49,12 +49,23 @@ export default {
             const updatedCart = JSON.parse(localStorage.getItem('cart')) || [];
             const itemCount = updatedCart.reduce((acc, item) => acc + item.quantity, 0);
             eventBus.emit('updateCart', itemCount);
+        },
+
+        redirect() {
+            if(this.cart.length == 0) {
+                window.location.replace(this.store.baseUrl)
+            }
         }
     },
 
     mounted() {
+        
         this.removeAll()
     },
+
+    beforeMount() {
+        this.redirect()
+    }
 
 }
 
