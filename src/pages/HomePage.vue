@@ -82,8 +82,7 @@ export default {
         <!-- ---------------------------------------------- -->
 
           <div class="side-bar">
-            
-            <!-- filters -->
+            <!-- filtri -->
             <AppFilter @filter="handleFilter"></AppFilter>
 
           </div>
@@ -92,19 +91,21 @@ export default {
 
           <div class="main-content">
 
-            <!-- restaurants list -->
-            <div class="row" v-if="filteredRestaurants.length > 0">
-              <div
-                class="col-lg-4 col-md-6 col-sm-12 mb-4"
+            <!-- lista ristoranti -->
+            <div class="rest-list gap-3" v-if="filteredRestaurants.length > 0">
+
+        
+                <RestaurantItem 
                 v-for="restaurant in filteredRestaurants"
                 :key="restaurant.id"
-              >
-                <RestaurantItem :restaurant="restaurant"></RestaurantItem>
-              </div>
+                :restaurant="restaurant"
+                >
+              </RestaurantItem>
+              
             </div>        
 
             <!-- se non vengono trovati ristoranti con i filtri -->
-            <div v-else>
+            <div v-else class="text-center">
               
               <h6>
                 Non sono stati trovati risultati per questa ricerca
@@ -112,7 +113,9 @@ export default {
               <div>
                 Aggiorna i filtri e riprova
               </div>
+
             </div>
+          
           </div>
 
           
@@ -130,23 +133,42 @@ export default {
 
   @media (max-width: 768px) {
     flex-direction: column;
-
   }
 
-}
+  .side-bar {
+    margin-right: 14px;
 
-// sidebar
-.side-bar {
-flex-grow: 0;
-}
+    h2 {
+      @include title2-semi;
+      color: $grey8;
+      margin-bottom: 14px;
+    }
+  }
 
-// main content
-.main-content {
-  flex-grow: 1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
+  .main-content {
+    flex-grow: 1;
 
+    h1 {
+    @include header-semi-prim;
+    }
+
+    .rest-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      // overflow-y: auto;
+      max-height: fit-content;
+
+      @media (max-width: 992px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+    }
+
+  }
 }
 
 </style>
