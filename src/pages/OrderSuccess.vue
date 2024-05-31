@@ -94,7 +94,7 @@ export default {
                     </p>
                     <hr>
                     <p class="fw-semibold">
-                        Totale: € {{ total_price }}
+                        Totale: € {{ total_price.toFixed(2) }}
                     </p>
                 </div>
 
