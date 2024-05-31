@@ -354,7 +354,7 @@ ul {
             p {
                 margin: 0;
                 padding: 0;
-                font-size: $txt6;
+                font-size: $txt5;
             }
         }
 
